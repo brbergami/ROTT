@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<component name="MainScene" extends="Scene"> 
-	<children>
-      <Label id="mainLabel" 
-      	text="Hello world"
-      	width="1280" 
-      	height="720" 
-      	horizAlign="center"
-      	vertAlign="center"
-      	/>
-    </children>
+<component name="MainScene" extends="Scene">
+<children>
+	<Label
+		id="mainLabel"
+		text="ROTT"
+		width="1920"
+		height="1080"
+		horizAlign="center"
+		vertAlign="center"
+		/>
+</children>
 </component>
