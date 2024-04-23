@@ -1,5 +1,8 @@
-# BrighterScript based project
-This is a template project for a Roku app written in [BrighterScript](https://github.com/rokucommunity/brighterscript)
+# ROTT
+ROTT is a personal OTT channel project made with love using BrightScript, BrighterScript and SceneGraph for fun and educational purposes.
+
+## BrighterScript based project
+Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and initially forked from [BrighterScript-Template](https://github.com/rokucommunity/brighterscript-template). Collection gallery is from https://jonathanbduval.com, made available inside this repo for HA. My respects to all their works.
 
 ## Setup instructions
 1. Install npm dependencies
