@@ -1,6 +1,6 @@
 sub init()
     bindComponents()
-    setStyle()
+    setStyles()
     hookObservers()
 end sub
 
@@ -8,7 +8,7 @@ sub bindComponents()
     m.mainLabel = m.top.findNode("mainLabel")
 end sub
 
-sub setStyle()
+sub setStyles()
     m.mainLabel.text = "ROTT"
     m.mainLabel.font.size = 100
     m.mainLabel.width = 1920
