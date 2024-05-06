@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="GridView" extends="Group" initialFocus="posterGrid" >
+    <children>
+        <Label
+            id="titleLabel"
+            />
+        <Label
+            id="descriptionLabel"
+            />
+        <MiniKeyboard
+            id="keyboard"
+            />
+        <PosterGrid
+            id="posterGrid"
+            />
+        <Timer
+            id="keyboardTimer"
+            repeat="true"
+            duration="3000"
+            />
+    </children>
+</component>
