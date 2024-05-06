@@ -1,8 +1,23 @@
 sub init()
-    m.top.setFocus(true)
+    bindComponents()
+    setStyle()
+    hookObservers()
+end sub
+
+sub bindComponents()
     m.mainLabel = m.top.findNode("mainLabel")
-    'change the color
-    m.mainLabel.color = "0xFFFFFF"
-    'make the text really big 
+end sub
+
+sub setStyle()
+    m.mainLabel.text = "ROTT"
     m.mainLabel.font.size = 100
+    m.mainLabel.width = 1920
+    m.mainLabel.height = 1080
+    m.mainLabel.color = "0xFFFFFF"
+    m.mainLabel.horizAlign = "center"
+    m.mainLabel.vertAlign = "center"
+end sub
+
+sub hookObservers()
+    '
 end sub
