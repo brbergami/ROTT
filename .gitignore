@@ -2,4 +2,4 @@ node_modules
 dist
 out
 .roku-deploy-staging
-src/components/.DS_Store
+.DS_Store
