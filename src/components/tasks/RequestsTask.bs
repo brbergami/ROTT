@@ -1,42 +1,56 @@
 sub init()
     m.top.functionName = "createRequest"
-    m.omdbApiUrl = "http://www.omdbapi.com/"
-    m.omdb_api_key = m.top.getGlobalNode().globalVars.omdb_api_key ' Check this returning correct value
+    m.top.timeoutSeconds = 1 ' For POST requests, converts to milliseconds
 end sub
 
 ' Run the task from caller
 
-' request AA format:
-' request = {
-'     "method": "GET",
-'     "url": "https://", | Specifying the protocol for taking account of certificates
-    ' "headers": {
+' Request AA format ---------------------------------------
+' {
+'    "method": "GET",
+'    "url": "https://", || Specify the full URL
+'    "headers": {
 '         "key1": "value1",
-    ' },
-'     "queryParams": {
+'    },
+'     "params": {
 '         "key1": "value1"
-    ' }
-sub createRequest() ' TBD: Add "POST" method
+' }
+' Response AA format ---------------------------------------
+' {
+'     responseCode: responseCode,
+'     responseBody: responseBody
+' }
+sub createRequest()
+    if m.top.request = {} then return
     urlTransfer = createObject("roUrlTransfer")
-    ' Add params to the url
-    formattedParams = "?"
-    queryParamsKeys = m.top.request.queryParams.getKeys()
-    for each queryKey in queryParamsKeys
-        formattedParams = formattedParams + queryKey + "=" + m.top.request.queryParams[queryKey] + "&"
+    urlTransfer.setRequest(m.top.request.method)
+    params as String = ""
+    responseBody as String = ""
+    responseCode as Integer = 0
+    for each param in m.top.request.params.items()
+        params += param.key + "=" + param.value + "&"
     end for
-    ' Add headers to the request
-    for each headerKey in m.top.request.headers.getKeys()
-        urlTransfer.AddHeader(headerKey, m.top.request.headers[headerKey])
-    end for
-    urlTransfer.setUrl(m.top.request.url + formattedParams)
-    responseCode = urlTransfer.getResponseCode()
-    responseBodyObject = parseJson(urlTransfer.getToString())
-    responseCode = urlTransfer.getResponseCode()
-    responseBody = createObject("roSGNode", "omdbContentNode")
-    responseBody.update(responseBodyObject, false)
+    ' GET  ------------------------------------------------------------------------------------
+    if m.top.request.method = "GET"
+        encodedParams = escape(params)
+        urlTransfer.setUrl(m.top.request.url + "?" + encodedParams)
+        responseBody = parseJson(urlTransfer.getToString())
+        responseCode = urlTransfer.getResponseCode()
+    ' POST  ------------------------------------------------------------------------------------
+    else if m.top.request.method = "POST"
+        encodedParams = formatJson(params)
+        urlTransfer.setUrl(m.top.request.url)
+        urlTransfer.setPort(createObject("roMessagePort"))
+        urlTransfer.setRequest("Content-Type", "application/json")
+        urlTransfer.asyncPostFromString(encodedParams)
+        urlResponse = wait(m.top.timeoutSeconds * 1000, urlTransfer.getMessagePort())
+        responseBody = urlResponse.getString()
+        responseCode = urlResponse.getResponseCode()
+    end if
+    '   ------------------------------------------------------------------------------------
     m.top.request = {}
     m.top.response = {
-        responseBody: responseBody,
-        responseCode: responseCode
+        responseCode: responseCode,
+        responseBody: responseBody
     }
 end sub

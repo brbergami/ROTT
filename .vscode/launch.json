@@ -6,7 +6,9 @@
             "request": "launch",
             "name": "BrightScript Debug: Launch",
             "stopOnEntry": false,
-            "host": "192.168.7.88",
+            "host": "${env:ROKU_DEV_TARGET}",
+            "password": "${env:ROKU_DEV_PASSWORD}",
+            "envFile": "${workspaceFolder}/.env",
             "rootDir": "${workspaceFolder}/dist",
             //run the BrighterScript build before each launch
             "preLaunchTask": "build"
@@ -16,7 +18,9 @@
             "request": "launch",
             "name": "BrightScript Debug: Launch (Watch)",
             "stopOnEntry": false,
-            "host": "192.168.7.88",
+            "host": "${env:ROKU_DEV_TARGET}",
+            "password": "${env:ROKU_DEV_PASSWORD}",
+            "envFile": "${workspaceFolder}/.env",
             "rootDir": "${workspaceFolder}/dist",
             //kick off the bsc watcher before launching
             "preLaunchTask": "watch",

@@ -16,25 +16,25 @@ sub bindComponents()
 end sub
 
 sub setStyles()
-    m.titleLabel.translation = [100, 32]
+    m.titleLabel.translation = [ 100, 32 ]
     m.titleLabel.font.size = 24
     m.titleLabel.font.weight = "bold"
     m.titleLabel.text = "Movies, series and episodes!"
 
-    m.descriptionLabel.translation = [100, 60]
+    m.descriptionLabel.translation = [ 100, 60 ]
     m.descriptionLabel.font.size = 12
     m.descriptionLabel.text = "Search for content info using OMDB database. You need a valid API key to use their service in this view."
 
     ' VoiceTextEditBox
     ' Check if a voice keyboard can be integrated or it's pointless with the MiniKeyboard + RC VoiceOver
 
-    m.keyboard.translation = [100, 100]
+    m.keyboard.translation = [ 100, 100 ]
 
     m.posterGrid.visible = false
     m.posterGrid.update({
-        translation: [100, 100],
-        basePosterSize: [240,240],
-        itemSpacing: [32,32],
+        translation: [ 100, 100 ],
+        basePosterSize: [ 240,240 ],
+        itemSpacing: [ 32,32 ],
         caption1NumLines: 1,
         caption2NumLines: 1,
         numColumns: 4,
