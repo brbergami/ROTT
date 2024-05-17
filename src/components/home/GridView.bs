@@ -1,9 +1,10 @@
 sub init()
     m.top.id = "GridView"
+    m.omdbApiUrl = "http://www.omdbapi.com/"
+    m.omdb_api_key = m.top.getGlobalNode().globalVars.omdb_api_key ' Check this returning correct value
     bindComponents()
     setStyles()
     hookObservers()
-    requestGridContent()
 end sub
 
 sub bindComponents()
@@ -11,6 +12,7 @@ sub bindComponents()
     m.descriptionLabel = m.top.findNode("descriptionLabel")
     m.keyboard = m.top.findNode("keyboard")
     m.posterGrid = m.top.findNode("posterGrid")
+    m.gridInfoLabel = m.top.findNode("gridInfoLabel")
     m.keyboardTimer = m.top.findNode("keyboardTimer")
     m.requestsTask = createObject("roSGNode", "RequestsTask")
 end sub
@@ -29,6 +31,8 @@ sub setStyles()
     ' Check if a voice keyboard can be integrated or it's pointless with the MiniKeyboard + RC VoiceOver
 
     m.keyboard.translation = [ 100, 100 ]
+    m.keyboard.textEditBox.hintText = "Start typing here"
+
 
     m.posterGrid.visible = false
     m.posterGrid.update({
@@ -40,8 +44,72 @@ sub setStyles()
         numColumns: 4,
         numRows: 3
     })
+
+    m.gridInfoLabel.visible = true
+    m.gridInfoLabel.translation = [
+        m.posterGrid.translation[0] + m.posterGrid.width / 2 - m.gridInfoLabel.width / 2,
+        m.posterGrid.translation[1] + m.posterGrid.height / 2 - m.gridInfoLabel.height / 2
+        ]
+    m.gridInfoLabel.font.size = 16
+    m.gridInfoLabel.text = "No results available"
+
+    m.keyboardTimer.repeat = "true"
+    m.keyboardTimer.duration = "5" ' Test this in the wild, maybe 5 sec still too low
 end sub
 
 sub hookObservers()
-    m.requestsTask.observeField("response", "onOMDBResponse")
+    m.requestsTask.observeField("response", "onSearchResponse")
+    m.keyboard.observeField("text", "onKeyboardTextChange")
+end sub
+
+sub onKeyboardTextChange(event as Object)
+    m.textInput = event.getData()
+    m.keyboardTimer.observeField("fire", "onTimerFinished")
+    m.keyboardTimer.control = "start" ' Define if and where should stop
+end sub
+
+sub onTimerFinished()
+    if m.textInput = "" or len(m.textInput) < 5 ' Less returns too many results for this API
+        m.posterGrid.visible = false
+        return
+    end if
+    requestGridContent(m.textInput)
+end sub
+
+' Hook this to the timer in order to trigger delayed requests
+sub requestGridContent(inputText as String)
+    m.requestsTask.request = {
+        method: "GET",
+        url: m.omdbApiUrl,
+        queryParams: {
+            apikey: m.omdb_api_key,
+            s: inputText.encodeURI() ' Check how this behaves when sending the query
+        }
+    }
+end sub
+
+sub onSearchResponse(event as Object)
+    response = event.getData()
+    if response?.responseCode <> 200 ' This should be kinda unified with responseError in order to update m.gridInfoLabel
+        print `ROTT Error: Component ${m.top.id} : OMDB Request : Response code ${response.responseCode}`
+        return
+    end if
+    ' Create certain validation for responses that doesn't show items
+    mappedResponse = createObject("roSGNode", "ContentNode")
+    if response.responseBody.response = true
+        for each content in response.responseBody
+            item = createObject("roSGNode", "omdbSearchContentNode")
+            item.update(content, false)
+            mappedResponse.appendChild(item)
+        end for
+    else
+        m.posterGrid.visible = false
+        responseError = response.responseBody.responseError
+        m.gridInfoLabel.text = responseError
+        m.gridInfoLabel.visible = true
+        print `ROTT Error: Component ${m.top.id} : OMDB Request : Response error ${responseError}`
+    end if
+    m.posterGrid.content = mappedResponse
+    m.posterGrid.visible = true
+    m.posterGrid.setFocus(true)
 end sub

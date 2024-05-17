@@ -3,8 +3,6 @@ sub init()
     m.top.timeoutSeconds = 1 ' For POST requests, converts to milliseconds
 end sub
 
-' Run the task from caller
-
 ' Request AA format ---------------------------------------
 ' {
 '    "method": "GET",

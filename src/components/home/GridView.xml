@@ -13,10 +13,11 @@
         <PosterGrid
             id="posterGrid"
             />
+        <Label
+            id="gridInfoLabel"
+            />
         <Timer
             id="keyboardTimer"
-            repeat="true"
-            duration="3000"
             />
     </children>
 </component>
