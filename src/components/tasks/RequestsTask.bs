@@ -18,22 +18,23 @@ end sub
 '     responseCode: responseCode,
 '     responseBody: responseBody
 ' }
+' TBD: Use GetIdentity() as Integer to manage all the requests
 sub createRequest()
-    if m.top.request = {} then return
+    if m.top.request.count() = 0 then return
     urlTransfer = createObject("roUrlTransfer")
     urlTransfer.setRequest(m.top.request.method)
     params as String = ""
     responseBody as String = ""
     responseCode as Integer = 0
     for each param in m.top.request.params.items()
-        params += param.key + "=" + param.value + "&"
+        params += param.key + "=" + param.value.encodeURI() + "&"
     end for
     ' GET  ------------------------------------------------------------------------------------
     if m.top.request.method = "GET"
-        encodedParams = escape(params)
-        urlTransfer.setUrl(m.top.request.url + "?" + encodedParams)
+        urlTransfer.setUrl(m.top.request.url + "?" + params)
+        ' responseBody = parseJson(urlTransfer.asyncGetToString()) ' this should be handled with an event
         responseBody = parseJson(urlTransfer.getToString())
-        responseCode = urlTransfer.getResponseCode()
+        ' responseCode = urlTransfer.getResponseCode() ' needs to be async
     ' POST  ------------------------------------------------------------------------------------
     else if m.top.request.method = "POST"
         encodedParams = formatJson(params)

@@ -5,19 +5,10 @@ sub init()
 end sub
 
 sub bindComponents()
-    m.mainLabel = m.top.findNode("mainLabel")
 end sub
 
 sub setStyles()
-    m.mainLabel.text = "ROTT"
-    m.mainLabel.font.size = 100
-    m.mainLabel.width = 1920
-    m.mainLabel.height = 1080
-    m.mainLabel.color = "0xFFFFFF"
-    m.mainLabel.horizAlign = "center"
-    m.mainLabel.vertAlign = "center"
 end sub
 
 sub hookObservers()
-    '
 end sub

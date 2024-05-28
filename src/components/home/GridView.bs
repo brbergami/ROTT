@@ -75,7 +75,7 @@ sub onTimerFinished()
         m.posterGrid.visible = false
         return
     end if
-    requestGridContent(m.textInput)
+    requestGridContent(m.textInput) ' Add mechanism with variable to compare if the search is repeated
 end sub
 
 ' Hook this to the timer in order to trigger delayed requests

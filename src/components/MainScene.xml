@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="MainScene" extends="Scene">
 	<children>
-		<Label
-			id="mainLabel"
+		<GridView
 			/>
 	</children>
 </component>
