@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="GridView" extends="Group" initialFocus="posterGrid" >
+    <interface>
+        <field id="close" type="boolean" value="false" />
+    </interface>
     <children>
         <Label
             id="titleLabel"

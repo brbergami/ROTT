@@ -1,0 +1,26 @@
+' Config.json config extractor
+function getConfigVar(variable as String) as String
+    appConfig = parseJSON(readAsciiFile("pkg:/config/config.json"))
+    return routeToObject(appConfig, variable)
+end function
+
+' Object route for an object
+function routeToObject(nestedObject as Object, route as String) as Dynamic
+    result = nestedObject
+    routeObj = parseRoute(route)
+    while routeObj.count() > 0
+        result = result[routeObj.pop()]
+        if result = invalid then exit while
+    end while
+    return result
+end function
+
+' A function that parses a string route to a nested object
+function parseRoute(route as String) as Object
+    return route.split(".") ' Add to lowercase?
+end function
+
+' One to get screen dimentions
+
+
+' One to check empty or invalid

@@ -1,10 +1,14 @@
+import "../../utils.bs" ' Tf it doesn't recognize the absolute path?..
+
 sub init()
     m.top.id = "GridView"
-    m.omdbApiUrl = "http://www.omdbapi.com/"
-    m.omdb_api_key = m.top.getGlobalNode().globalVars.omdb_api_key ' Check this returning correct value
+    m.omdbApiUrl = getConfigVar("apiConfig.OMDB.API")
+    m.omdb_api_key = getConfigVar("apiConfig.OMDB.API_KEY")
+    m.lastTextInput = ""
     bindComponents()
     setStyles()
     hookObservers()
+    m.keyboard.setFocus(true)
 end sub
 
 sub bindComponents()
@@ -18,25 +22,25 @@ sub bindComponents()
 end sub
 
 sub setStyles()
-    m.titleLabel.translation = [ 100, 32 ]
-    m.titleLabel.font.size = 24
-    m.titleLabel.font.weight = "bold"
+    m.titleLabel.translation = [ 120, 100 ]
     m.titleLabel.text = "Movies, series and episodes!"
+    m.titleLabel.font = "font:LargeBoldSystemFont"
 
-    m.descriptionLabel.translation = [ 100, 60 ]
-    m.descriptionLabel.font.size = 12
+    m.descriptionLabel.translation = [ 120, 160 ]
     m.descriptionLabel.text = "Search for content info using OMDB database. You need a valid API key to use their service in this view."
+    m.descriptionLabel.font = "font:SmallestSystemFont"
 
     ' VoiceTextEditBox
     ' Check if a voice keyboard can be integrated or it's pointless with the MiniKeyboard + RC VoiceOver
 
-    m.keyboard.translation = [ 100, 100 ]
+    m.keyboard.translation = [ 100, 250 ]
     m.keyboard.textEditBox.hintText = "Start typing here"
 
-
     m.posterGrid.visible = false
+    m.posterGrid.posterDisplayMode = "scaleToZoom"
+    m.posterGrid.basePosterSize = [250, 375] ' TBD: Refine this
     m.posterGrid.update({
-        translation: [ 100, 100 ],
+        translation: [ 750, 260 ],
         basePosterSize: [ 240,240 ],
         itemSpacing: [ 32,32 ],
         caption1NumLines: 1,
@@ -46,29 +50,27 @@ sub setStyles()
     })
 
     m.gridInfoLabel.visible = true
-    m.gridInfoLabel.translation = [
-        m.posterGrid.translation[0] + m.posterGrid.width / 2 - m.gridInfoLabel.width / 2,
-        m.posterGrid.translation[1] + m.posterGrid.height / 2 - m.gridInfoLabel.height / 2
-        ]
+    m.gridInfoLabel.translation = [ 960, 540 ] ' TDB: Relative position based in parent
     m.gridInfoLabel.font.size = 16
     m.gridInfoLabel.text = "No results available"
 
-    m.keyboardTimer.repeat = "true"
-    m.keyboardTimer.duration = "5" ' Test this in the wild, maybe 5 sec still too low
+    m.keyboardTimer.duration = "3"
 end sub
 
 sub hookObservers()
-    m.requestsTask.observeField("response", "onSearchResponse")
     m.keyboard.observeField("text", "onKeyboardTextChange")
+    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdges")
+    m.requestsTask.observeField("response", "onSearchResponse")
 end sub
 
 sub onKeyboardTextChange(event as Object)
     m.textInput = event.getData()
-    m.keyboardTimer.observeField("fire", "onTimerFinished")
     m.keyboardTimer.control = "start" ' Define if and where should stop
+    m.keyboardTimer.observeField("fire", "onTimerFinished")
 end sub
 
 sub onTimerFinished()
+    m.keyboardTimer.control = "stop"
     if m.textInput = "" or len(m.textInput) < 5 ' Less returns too many results for this API
         m.posterGrid.visible = false
         return
@@ -81,27 +83,37 @@ sub requestGridContent(inputText as String)
     m.requestsTask.request = {
         method: "GET",
         url: m.omdbApiUrl,
-        queryParams: {
+        params: {
             apikey: m.omdb_api_key,
-            s: inputText.encodeURI() ' Check how this behaves when sending the query
+            s: inputText
         }
     }
+    m.requestsTask.control = "run"
 end sub
 
 sub onSearchResponse(event as Object)
     response = event.getData()
-    if response?.responseCode <> 200 ' This should be kinda unified with responseError in order to update m.gridInfoLabel
-        print `ROTT Error: Component ${m.top.id} : OMDB Request : Response code ${response.responseCode}`
-        return
-    end if
+    ' if response?.responseCode <> 200 ' This should be kinda unified with responseError in order to update m.gridInfoLabel
+    '     print `ROTT Error: Component ${m.top.id} : OMDB Request : Response code ${response.responseCode}`
+    '     return
+    ' end if
     ' Create certain validation for responses that doesn't show items
-    mappedResponse = createObject("roSGNode", "ContentNode")
-    if response.responseBody.response = true
-        for each content in response.responseBody
-            item = createObject("roSGNode", "omdbSearchContentNode")
-            item.update(content, false)
-            mappedResponse.appendChild(item)
+    responseContent = createObject("roSGNode", "ContentNode")
+    if response.responseBody.response = "True"
+        for each item in response.responseBody.search
+            nodeItem = createObject("roSGNode", "ContentNode")
+            nodeItem.update({
+                CONTENTYPE: item.Type
+                TITLE: item.Title
+                HDPOSTERURL: item.Poster
+                imdbID: item.imdbID
+            }, true)
+            responseContent.appendChild(nodeItem)
         end for
+        m.gridInfoLabel.visible = false
+        m.posterGrid.content = responseContent
+        m.posterGrid.visible = true
+        m.posterGrid.setFocus(true)
     else
         m.posterGrid.visible = false
         responseError = response.responseBody.responseError
@@ -109,7 +121,28 @@ sub onSearchResponse(event as Object)
         m.gridInfoLabel.visible = true
         print `ROTT Error: Component ${m.top.id} : OMDB Request : Response error ${responseError}`
     end if
-    m.posterGrid.content = mappedResponse
-    m.posterGrid.visible = true
-    m.posterGrid.setFocus(true)
 end sub
+
+sub onFocusChangedForEdge(event as Object)
+    focusedChild = event.getData()
+    if focusedChild <> invalid and focusedChild.x = 0
+        m.keyboard.setFocus(true)
+    end if
+end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    if not press then return false
+    if  key = "back"
+        m.top.close = true
+        return true
+    else if key = "left"
+        ' return true
+    else if key = "right"
+        ' return true
+    else if key = "up"
+        ' return true
+    else if key = "down"
+        ' return true
+    end if
+    return false
+end function
