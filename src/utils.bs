@@ -15,12 +15,18 @@ function routeToObject(nestedObject as Object, route as String) as Dynamic
     return result
 end function
 
-' A function that parses a string route to a nested object
+' A function that parses a route to a nested object, in String format
 function parseRoute(route as String) as Object
-    return route.split(".") ' Add to lowercase?
+    return route.split(".")
 end function
 
-' One to get screen dimentions
+' Get the screen resolution as object
+function getResolutionObject() as Object
+    deviceInfo = createObject("roDeviceInfo")
+    return [ deviceInfo.getDisplaySize().width, deviceInfo.getDisplaySize().height ]
+end function
 
-
-' One to check empty or invalid
+' Return true if the item is invalid
+function isInvalid(item as Object) as Boolean
+    return item <> invalid
+end function

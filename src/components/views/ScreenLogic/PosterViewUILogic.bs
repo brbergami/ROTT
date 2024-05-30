@@ -1,0 +1,18 @@
+import "pkg:/components/views/ScreenLogic/PlayerViewUILogic.bs"
+
+sub showPosterView(poster as Object)
+    if not isInvalid(poster) then return
+    m.posterView = createObject("roSGNode", "PosterView")
+    m.posterView.content = poster
+    m.posterView.observeField("close", "onCloseRequested")
+    m.posterView.observeField("playVideo", "onPlayButtonSelected")
+    showScreen(m.posterView)
+end sub
+
+sub onCloseRequested(event as Object)
+    closeScreen(m.posterView)
+end sub
+
+sub onPlayButtonSelected(content as Object)
+    showScreen(m.playerView)
+end sub

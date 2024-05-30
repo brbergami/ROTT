@@ -1,14 +1,8 @@
+import "pkg:/components/views/ScreenLogic/ScreenStackLogic.bs"
+import "pkg:/components/views/ScreenLogic/GridViewUILogic.bs"
+import "pkg:/utils.bs"
+
 sub init()
-    bindComponents()
-    setStyles()
-    hookObservers()
-end sub
-
-sub bindComponents()
-end sub
-
-sub setStyles()
-end sub
-
-sub hookObservers()
+    initializeScreenStack()
+    showGridView()
 end sub

@@ -1,4 +1,4 @@
-import "../../utils.bs" ' Tf it doesn't recognize the absolute path?..
+import "pkg:/utils.bs"
 
 sub init()
     m.top.id = "GridView"

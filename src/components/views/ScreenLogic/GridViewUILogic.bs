@@ -1,0 +1,12 @@
+import "pkg:/components/views/ScreenLogic/PosterViewUILogic.bs"
+
+sub showGridView()
+    m.gridView = CreateObject("roSGNode", "GridView")
+    m.gridView.observeField("posterSelected", "onPosterSelected")
+    showScreen(m.gridView)
+end sub
+
+sub onPosterSelected(event as Object)
+    poster = event.getData()
+    showPosterView(poster)
+end sub

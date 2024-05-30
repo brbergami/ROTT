@@ -1,0 +1,81 @@
+sub init()
+    m.top.id = "PosterView"
+    m.top.backgroundColor = "0x1F2430"
+    bindComponents()
+    setStyles()
+    hookObservers()
+    ' Handle the m.top.content to display
+end sub
+
+sub bindComponents()
+    m.poster = m.top.findNode("poster")
+    m.divider = m.top.findNode("divider")
+    m.secondHalfGroup = m.top.findNode("secondHalfGroup")
+    m.contentTitle = m.top.findNode("contentTitle")
+    m.contentYear = m.top.findNode("contentYear")
+    m.contentDescription = m.top.findNode("contentDescription")
+end sub
+
+sub setStyles()
+    sqMarginSmall = 90
+    sqMarginBig = sqMarginSmall * 2
+    ' Should set some rules here to make it play well taking display
+    ' size and using rule of three to calculate the sizes
+
+    ' TBD: Create a mask for the posters, maybe..
+    m.poster.translation = [ sqMarginBig, sqMarginBig ]
+    m.poster.width = 640
+    m.poster.height = 960
+    m.poster.loadDisplayMode = "scaleToZoom"
+
+    m.divider.translation = [ 959, sqMarginBig ]
+    m.divider.width = 2 ' Should be even to make it symmetrical in position
+    m.divider.height = 960
+    m.divider.color = "0xD3D3D3FF"
+
+    m.secondHalfGroup.translation = [ 1066, 100 ]
+    m.secondHalfGroup.clippingRect = [ sqMarginSmall, sqMarginSmall, m.poster.width-sqMarginSmall, m.poster.height-sqMarginSmall ]
+    m.secondHalfGroup.itemSpacings = [ 27 ] ' Check if only for the vertical placement is ok
+
+    m.contentTitle.translation = [ sqMarginBig, sqMarginBig ]
+    m.contentTitle.width = 426
+    m.contentTitle.font = "font:MediumBoldSystemFont"
+
+    m.contentYear.translation = [ sqMarginBig, 120 ]
+    m.contentYear.width = 426
+    m.contentYear.font = "font:LargeBoldSystemFont"
+
+    m.contentDescription.translation = [ sqMarginBig, 150 ]
+    m.contentDescription.width = 426
+    m.contentDescription.height = 491
+    m.contentDescription.font = "font:SmallSystemFont"
+    m.contentDescription.ellipsizeOnBoundary = true
+    m.contentDescription.wrap = true
+    m.contentDescription.maxWidth = 384
+end sub
+
+sub hookObservers()
+    m.top.observeField("content", "onContentChanged")
+end sub
+
+sub onContentChanged(event as Object)
+    eventContent = event.getData()
+    if eventContent = invalid then return
+    ' Logic for small posters to scale up?
+    m.poster.uri = eventContent.poster
+    m.contentTitle.text = eventContent.title
+    m.contentYear.text = eventContent.year
+    m.contentDescription.text = eventContent.plot
+end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    result = false
+    if press = true
+        ' Is this required att?
+        ' if key = "back"
+        '     m.top.close = true
+        '     result = true
+        ' end if
+    end if
+    return result
+end function

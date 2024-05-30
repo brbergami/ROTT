@@ -1,0 +1,31 @@
+sub initializeScreenStack()
+    m.screenStack = []
+end sub
+
+sub showScreen(node as Object)
+    previous = m.screenStack.peek()
+    if previous <> invalid
+        previous.visible = false
+    end if
+    m.top.appendChild(node)
+    node.visible = true
+    node.setFocus(true)
+    m.screenStack.push(node)
+end sub
+
+function getCurrentScreen()
+    return m.screenStack.peek()
+end function
+
+sub closeScreen(node as Object)
+    if node = invalid or (m.screenStack.peek() <> invalid and m.screenStack.peek().isSameNode(node))
+        last = m.screenStack.pop()
+        last.visible = false
+        m.top.removeChild(last)
+        previous = m.screenStack.peek()
+        if previous <> invalid
+            previous.visible = true
+            previous.setFocus(true)
+        end if
+    end if
+end sub
