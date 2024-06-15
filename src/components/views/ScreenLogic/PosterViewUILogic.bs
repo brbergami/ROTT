@@ -13,6 +13,6 @@ sub onCloseRequested(event as Object)
     closeScreen(m.posterView)
 end sub
 
-sub onPlayButtonSelected(content as Object)
+sub onPlayButtonSelected()
     showScreen(m.playerView)
 end sub
