@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PlayerView" extends="Group" >
+    <interface>
+        <field id="close" type="boolean" value="false" />
+        <field id="content" type="node" />
+    </interface>
+    <children>
+        <Video
+            id="player"
+            >
+            <MaskGroup
+                id="maskGroup"
+                >
+                <Button
+                    id="rewindButton"
+                    />
+                <Button
+                    id="playPauseButton"
+                    />
+                <Button
+                    id="forwardButton"
+                    />
+            </MaskGroup>
+            <Animation
+                id="maskGroupAnimation"
+                >
+                <Vector2DFieldInterpolator
+                    id="maskGroupAnimationInterpolator"
+                     />
+            </Animation>
+        </Videoplayer>
+    </children>
+</component>

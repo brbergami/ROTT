@@ -27,7 +27,9 @@ sub createRequest()
     responseBody as String = ""
     responseCode as Integer = 0
     for each param in m.top.request.params.items()
-        params += param.key + "=" + param.value.encodeURI() + "&"
+        paramKey = param.key
+        paramValue =  param.value.encodeURI()
+        params += "${paramKey}=${paramValue}&"
     end for
     ' GET  ------------------------------------------------------------------------------------
     if m.top.request.method = "GET"

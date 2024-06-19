@@ -1,5 +1,6 @@
 import "pkg:/components/views/ScreenLogic/ScreenStackLogic.bs"
 import "pkg:/components/views/ScreenLogic/GridViewUILogic.bs"
+import "pkg:/components/views/ScreenLogic/PlayerViewUILogic.bs"
 import "pkg:/utils.bs"
 
 sub init()

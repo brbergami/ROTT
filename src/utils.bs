@@ -1,5 +1,5 @@
 ' Config.json config extractor
-function getConfigVar(variable as String) as String
+function getConfigVar(variable as String) as Dynamic
     appConfig = parseJSON(readAsciiFile("pkg:/config/config.json"))
     return routeToObject(appConfig, variable)
 end function
@@ -8,10 +8,10 @@ end function
 function routeToObject(nestedObject as Object, route as String) as Dynamic
     result = nestedObject
     routeObj = parseRoute(route)
-    while routeObj.count() > 0
-        result = result[routeObj.pop()]
-        if result = invalid then exit while
-    end while
+    for each accessor in routeObj
+        result = result[accessor]
+        if isInvalid(result) then exit for
+    end for
     return result
 end function
 
@@ -26,7 +26,12 @@ function getResolutionObject() as Object
     return [ deviceInfo.getDisplaySize().width, deviceInfo.getDisplaySize().height ]
 end function
 
+' Return true if the item is not invalid
+function isNotInvalid(item as Object) as Boolean
+    return item <> invalid
+end function
+
 ' Return true if the item is invalid
 function isInvalid(item as Object) as Boolean
-    return item <> invalid
+    return item = invalid
 end function

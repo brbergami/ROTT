@@ -1,5 +1,4 @@
-sub showPlayerView(content as Object)
-    if isInvalid(content) then return
+sub showPlayerView(content = invalid as Object)
     m.playerView = createObject("roSGNode", "PlayerView")
     m.playerView.content = content
     m.playerView.observeField("close", "onClosePlayerRequested")

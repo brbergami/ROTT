@@ -1,7 +1,7 @@
 import "pkg:/components/views/ScreenLogic/PlayerViewUILogic.bs"
 
 sub showPosterView(poster as Object)
-    if not isInvalid(poster) then return
+    if isNotInvalid(poster) then return
     m.posterView = createObject("roSGNode", "PosterView")
     m.posterView.content = poster
     m.posterView.observeField("close", "onCloseRequested")

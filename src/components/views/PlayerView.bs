@@ -1,0 +1,130 @@
+import "pkg:/utils.bs"
+const TEST_VIDEO_URL_MUX = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" ' Big Buck Bunny video HLS
+const TEST_VIDEO_URL_BITMOVIN = "https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" ' Bitmovin video HLS
+const TEST_VIDEO_URL_FLOWPLAYER = "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8" ' Flowplayer video HLS
+
+sub init()
+    bindComponents()
+    setStyles()
+    hookObservers()
+end sub
+
+sub bindComponents()
+    m.player = m.top.findNode("player")
+    m.maskGroup = m.top.findNode("maskGroup")
+    m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
+    m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
+    m.rewindButton = m.top.findNode("rewindButton")
+    m.playPauseButton = m.top.findNode("playPauseButton")
+    m.forwardButton = m.top.findNode("forwardButton")
+end sub
+
+sub setStyles()
+    m.player.width = 1920
+    m.player.height = 1080
+    m.player.maxVideoDecodeResolution = [ 1080, 1920 ]
+    playContent()
+    ' TBD: Add mechanism for making a good use of "prebuffer"
+
+    ' TBD: Define logic fade-in/fade-out for mask
+
+    ' m.maskGroup.maskSize = [ 1920, 1080 ]
+    ' m.maskGroup.maskUri = "pkg:/images/transparent-mask.png"
+    ' m.maskGroup.maskOffset = [ -1920, 0 ] ' Fine tune this
+
+    ' m.maskGroupAnimation.duration = 1
+    ' m.maskGroupAnimation.easeFunction = "linear"
+    ' m.maskGroupAnimation.control = "start"
+
+    ' m.maskGroupAnimationInterpolator.fieldToInterp = "maskGroup.opacity"
+    ' m.maskGroupAnimationInterpolator.key = [ 0.0, 0.5, 1.0 ]
+    ' m.maskGroupAnimationInterpolator.keyValue = [ 0.0, 0.5, 1.0 ]
+
+    ' m.rewindButton.iconUri = "pkg:/images/button-rewind.png"
+    ' m.rewindButton.translation = [ 660, 480 ]
+    ' m.rewindButton.width = 120
+    ' m.rewindButton.height = 120
+
+    ' m.playPauseButton.iconUri = "pkg:/images/button-play.png"
+    ' m.playPauseButton.translation = [ 900, 480 ]
+    ' m.playPauseButton.width = 120
+    ' m.playPauseButton.height = 120
+
+    ' m.forwardButton.iconUri = "pkg:/images/button-forward.png"
+    ' m.forwardButton.translation = [ 1130, 480 ]
+    ' m.forwardButton.width = 120
+    ' m.forwardButton.height = 120
+end sub
+
+sub hookObservers()
+    ' m.player.observeField("content", "playContent") ' Disabled for testing, check for the alias "player.content"
+    m.player.observeField("state", "onPlayerStateChange")
+    ' m.rewindButton.observeField("buttonSelected", "onRewindButtonPressed")
+    ' m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
+    ' m.forwardButton.observeField("buttonSelected", "onForwardButtonPressed")
+end sub
+
+sub onPlayPauseButtonPressed()
+    ' TBD: Logic to handle all the buttons via event loop listener
+    ' m.playPauseButton.iconUri = (m.player.state = "playing") ? "pkg:/images/button-pause.png" : "pkg:/images/button-play.png"
+    m.player.control = (m.player.state = "playing") ? "pause" : "resume"
+end sub
+
+sub onRewindButtonPressed()
+    ' Check this can take negative values
+    m.player.seek = m.player.duration - 15
+end sub
+
+sub onForwardButtonPressed()
+    ' Check this can take values passing the duration of the video
+    m.player.seek = m.player.duration + 15
+end sub
+
+sub playContent()
+    ' Check fast video start https://developer.roku.com/en-ca/docs/developer-program/media-playback/fast-video-start.md
+    ' TBD: Add complete trickmode playing https://developer.roku.com/en-ca/docs/developer-program/media-playback/trick-mode/hls-and-dash.md
+    if isNotInvalid(m.top.content)
+        ' Check because this could be triggered by the alias "player.content"
+        m.player.content = m.top.content
+    else
+        mediaContent = createObject("roSGNode", "ContentNode")
+        mediaContent.title = "Big Buck Bunny fallback test video"
+        mediaContent.contentType = "movie"
+        mediaContent.streamFormat = "hls"
+        mediaContent.stream = {
+            url: TEST_VIDEO_URL_MUX
+        }
+        m.player.content = mediaContent
+    end if
+    m.player.control = "play"
+end sub
+
+sub onPlayerStateChange(event as Object)
+    state = event.getData()
+    if state = "finished"
+        m.player.visible = false
+        m.player.control = "stop"
+        m.top.close = true
+    else if state = "error"
+        handlePlayerError()
+    end if
+end sub
+
+sub handlePlayerError()
+    ' m.player.enableDecoderStats = true ' Check how useful this is during playback
+    ' print "Error info: ${m.player.decoderStats}"
+    print "Error code: ${m.player.errorCode}"
+    print "Error string: ${m.player.errorString}"
+    print "Error info: ${m.player.errorInfo}"
+end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    if not press then return false
+    handled = false
+    if  key = "back"
+        m.player.control = "stop"
+        m.player.content = invalid
+        m.top.close = true
+    end if
+    return handled
+end function

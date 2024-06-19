@@ -1,9 +1,10 @@
 import "pkg:/utils.bs"
 
+const OMDB_API_URL = getConfigVar("apiConfig.OMDB.API")
+const OMDB_API_KEY = getConfigVar("apiConfig.OMDB.API_KEY")
+
 sub init()
     m.top.id = "GridView"
-    m.omdbApiUrl = getConfigVar("apiConfig.OMDB.API")
-    m.omdb_api_key = getConfigVar("apiConfig.OMDB.API_KEY")
     m.lastTextInput = ""
     bindComponents()
     setStyles()
@@ -37,24 +38,21 @@ sub setStyles()
     m.keyboard.textEditBox.hintText = "Start typing here"
 
     m.posterGrid.visible = false
+    m.posterGrid.translation = [ 750, 260 ]
     m.posterGrid.posterDisplayMode = "scaleToZoom"
-    m.posterGrid.basePosterSize = [250, 375] ' TBD: Refine this
-    m.posterGrid.update({
-        translation: [ 750, 260 ],
-        basePosterSize: [ 240,240 ],
-        itemSpacing: [ 32,32 ],
-        caption1NumLines: 1,
-        caption2NumLines: 1,
-        numColumns: 4,
-        numRows: 3
-    })
+    m.posterGrid.basePosterSize = [ 800, 443 ] ' Test with this disabled
+    m.posterGrid.itemSpacing = [ 32, 32 ]
+    m.posterGrid.caption1NumLines = 1
+    m.posterGrid.caption2NumLines = 1
+    m.posterGrid.numColumns = 4
+    m.posterGrid.numRows = 3
 
     m.gridInfoLabel.visible = true
     m.gridInfoLabel.translation = [ 960, 540 ] ' TDB: Relative position based in parent
     m.gridInfoLabel.font.size = 16
     m.gridInfoLabel.text = "No results available"
 
-    m.keyboardTimer.duration = "3"
+    m.keyboardTimer.duration = 3
 end sub
 
 sub hookObservers()
@@ -81,10 +79,10 @@ end sub
 ' Hook this to the timer in order to trigger delayed requests
 sub requestGridContent(inputText as String)
     m.requestsTask.request = {
-        method: "GET",
-        url: m.omdbApiUrl,
+        method: "GET"
+        url: OMDB_API_URL
         params: {
-            apikey: m.omdb_api_key,
+            apikey: OMDB_API_KEY
             s: inputText
         }
     }
@@ -102,16 +100,14 @@ sub onSearchResponse(event as Object)
     if response.responseBody.response = "True"
         for each item in response.responseBody.search
             nodeItem = createObject("roSGNode", "ContentNode")
-            nodeItem.update({
-                CONTENTYPE: item.Type
-                TITLE: item.Title
-                HDPOSTERURL: item.Poster
-                imdbID: item.imdbID
-            }, true)
+            nodeItem.CONTENTYPE = item.Type
+            nodeItem.TITLE = item.Title
+            nodeItem.HDPOSTERURL = item.Poster
+            nodeItem.imdbID = item.imdbID
             responseContent.appendChild(nodeItem)
         end for
-        m.gridInfoLabel.visible = false
         m.posterGrid.content = responseContent
+        m.gridInfoLabel.visible = false
         m.posterGrid.visible = true
         m.posterGrid.setFocus(true)
     else
