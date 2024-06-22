@@ -109,10 +109,10 @@ end sub
 
 sub handlePlayerError()
     ' m.player.enableDecoderStats = true ' Check how useful this is during playback
-    ' print "Error info: ${m.player.decoderStats}"
-    print "Error code: ${m.player.errorCode}"
-    print "Error string: ${m.player.errorString}"
-    print "Error info: ${m.player.errorInfo}"
+    ' print `Error info: ${m.player.decoderStats}`
+    print `Error code: ${m.player.errorCode}`
+    print `Error string: ${m.player.errorString}`
+    print `Error info: ${m.player.errorInfo}`
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean

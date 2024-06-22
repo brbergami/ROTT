@@ -29,7 +29,7 @@ sub createRequest()
     for each param in m.top.request.params.items()
         paramKey = param.key
         paramValue =  param.value.encodeURI()
-        params += "${paramKey}=${paramValue}&"
+        params += `${paramKey}=${paramValue}&`
     end for
     ' GET  ------------------------------------------------------------------------------------
     if m.top.request.method = "GET"
