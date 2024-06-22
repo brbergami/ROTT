@@ -1,3 +1,5 @@
+import "pkg:/utils.bs"
+
 sub init()
     m.top.id = "PosterView"
     m.top.backgroundColor = "0x1F2430"
@@ -60,7 +62,7 @@ end sub
 
 sub onContentChanged(event as Object)
     eventContent = event.getData()
-    if eventContent = invalid then return
+    if isInvalid(eventContent) then return
     ' Logic for small posters to scale up?
     m.poster.uri = eventContent.poster
     m.contentTitle.text = eventContent.title

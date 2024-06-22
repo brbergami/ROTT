@@ -1,5 +1,4 @@
 import "pkg:/utils.bs"
-
 const OMDB_API_URL = getConfigVar("apiConfig.OMDB.API")
 const OMDB_API_KEY = getConfigVar("apiConfig.OMDB.API_KEY")
 
