@@ -89,11 +89,8 @@ sub playContent()
     else
         mediaContent = createObject("roSGNode", "ContentNode")
         mediaContent.title = "Big Buck Bunny fallback test video"
-        mediaContent.contentType = "movie"
         mediaContent.streamFormat = "hls"
-        mediaContent.stream = {
-            url: TEST_VIDEO_URL_MUX
-        }
+        mediaContent.url = TEST_VIDEO_URL_MUX
         m.player.content = mediaContent
     end if
     m.player.control = "play"
