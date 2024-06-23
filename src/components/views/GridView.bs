@@ -69,7 +69,7 @@ end sub
 
 sub onTimerFinished()
     m.keyboardTimer.control = "stop"
-    if m.textInput = "" or len(m.textInput) < 5 ' Less returns too many results for this API
+    if len(m.textInput) < 5 ' Less returns too many results for this API
         m.posterGrid.visible = false
         return
     end if
