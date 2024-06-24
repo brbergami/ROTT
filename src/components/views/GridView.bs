@@ -40,10 +40,8 @@ sub setStyles()
     m.posterGrid.visible = false
     m.posterGrid.translation = [ 750, 260 ]
     m.posterGrid.posterDisplayMode = "scaleToZoom"
-    m.posterGrid.basePosterSize = [ 800, 443 ] ' Test with this disabled
+    m.posterGrid.basePosterSize = [ 240, 300 ]
     m.posterGrid.itemSpacing = [ 32, 32 ]
-    m.posterGrid.caption1NumLines = 1
-    m.posterGrid.caption2NumLines = 1
     m.posterGrid.numColumns = 4
     m.posterGrid.numRows = 3
 
@@ -76,7 +74,6 @@ sub onTimerFinished()
     requestGridContent(m.textInput) ' Add mechanism with variable to compare if the search is repeated
 end sub
 
-' Hook this to the timer in order to trigger delayed requests
 sub requestGridContent(inputText as String)
     m.requestsTask.request = {
         method: "GET"
