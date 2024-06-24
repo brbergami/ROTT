@@ -2,6 +2,7 @@
 <component name="GridView" extends="Group" initialFocus="posterGrid" >
     <interface>
         <field id="close" type="boolean" value="false" />
+        <field id="imdbidSelected" type="string" />
     </interface>
     <children>
         <Label

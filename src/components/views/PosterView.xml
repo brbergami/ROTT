@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="PosterView" extends="Group" >
     <interface>
-        <field id="content" type="node" />
+        <field id="close" type="string" />
+        <field id="imdbid" type="string" />
+        <field id="playVideo" type="boolean" />
     </interface>
     <children>
         <Poster

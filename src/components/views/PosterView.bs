@@ -1,8 +1,9 @@
 import "pkg:/utils.bs"
+const OMDB_API_URL = getConfigVar("apiConfig.OMDB.API")
+const OMDB_API_KEY = getConfigVar("apiConfig.OMDB.API_KEY")
 
 sub init()
     m.top.id = "PosterView"
-    m.top.backgroundColor = "0x1F2430"
     bindComponents()
     hookObservers()
     setStyles()
@@ -16,6 +17,7 @@ sub bindComponents()
     m.contentTitle = m.top.findNode("contentTitle")
     m.contentYear = m.top.findNode("contentYear")
     m.contentDescription = m.top.findNode("contentDescription")
+    m.requestsTask = createObject("roSGNode", "RequestsTask")
 end sub
 
 sub hookObservers()
@@ -60,24 +62,44 @@ sub setStyles()
     m.contentDescription.maxWidth = 384
 end sub
 
-sub onContentChanged(event as Object)
-    eventContent = event.getData()
-    if isInvalid(eventContent) then return
-    ' Logic for small posters to scale up?
-    m.poster.uri = eventContent.poster
-    m.contentTitle.text = eventContent.title
-    m.contentYear.text = eventContent.year
-    m.contentDescription.text = eventContent.plot
+sub hookObservers()
+    m.top.observeField("imdbid", "requestTitleDetails")
+    m.requestsTask.observeField("response", "onTitleResponse")
+end sub
+
+sub requestTitleDetails(event as Object)
+    imdbid = event.getData()
+    m.requestsTask.request = {
+        method: "GET"
+        url: OMDB_API_URL
+        params: {
+            apikey: OMDB_API_KEY
+            i: imdbid
+            plot: "full"
+        }
+    }
+    m.requestsTask.control = "run"
+end sub
+
+sub onTitleResponse(event as Object)
+    m.requestsTask.control = "stop"
+    response = event.getData()
+    responseBody = response.responseBody
+    if responseBody.response = "False"
+        print `ROTT Error: Component ${m.top.id} : OMDB Request : Response error ${responseBody["Error"]}`
+        return
+    end if
+    m.poster.uri = responseBody["Poster"]
+    m.contentTitle.text = responseBody["Title"]
+    m.contentYear.text = responseBody["Year"]
+    m.contentDescription.text = responseBody["Plot"]
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
-    result = false
-    if press = true
-        ' Is this required att?
-        ' if key = "back"
-        '     m.top.close = true
-        '     result = true
-        ' end if
+    if not press then return false
+    if key = "back"
+        m.top.close = true
+        return true
     end if
-    return result
+    return false
 end function

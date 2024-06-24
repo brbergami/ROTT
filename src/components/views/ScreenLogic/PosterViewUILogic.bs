@@ -1,9 +1,8 @@
 import "pkg:/components/views/ScreenLogic/PlayerViewUILogic.bs"
 
-sub showPosterView(poster as Object)
-    if isNotInvalid(poster) then return
+sub showPosterView(imdbid = "tt2724064" as String)
     m.posterView = createObject("roSGNode", "PosterView")
-    m.posterView.content = poster
+    m.posterView.imdbid = imdbid
     m.posterView.observeField("close", "onCloseRequested")
     m.posterView.observeField("playVideo", "onPlayButtonSelected")
     showScreen(m.posterView)
@@ -14,5 +13,5 @@ sub onCloseRequested(event as Object)
 end sub
 
 sub onPlayButtonSelected()
-    showScreen(m.playerView)
+    showPlayerView()
 end sub

@@ -58,6 +58,19 @@ sub setStyles()
     m.keyboardTimer.duration = 3
 end sub
 
+sub hookObservers()
+    m.top.observeField("visible", "onVisibleChange")
+    m.keyboard.observeField("text", "onKeyboardTextChange")
+    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdge")
+    m.posterGrid.observeField("itemSelected", "onItemSelected")
+    m.requestsTask.observeField("response", "onSearchResponse")
+end sub
+
+sub onVisibleChange(event as Object)
+    isVisible = event.getData()
+    if isVisible then m.posterGrid.setFocus(true)
+end sub
+
 sub onKeyboardTextChange(event as Object)
     m.textInput = event.getData()
     m.keyboardTimer.control = "start" ' Define if and where should stop
@@ -91,15 +104,16 @@ sub onSearchResponse(event as Object)
     '     print `ROTT Error: Component ${m.top.id} : OMDB Request : Response code ${response.responseCode}`
     '     return
     ' end if
-    ' Create certain validation for responses that doesn't show items
     responseContent = createObject("roSGNode", "ContentNode")
     if response.responseBody.response = "True"
         for each item in response.responseBody.search
             nodeItem = createObject("roSGNode", "ContentNode")
-            nodeItem.CONTENTYPE = item.Type
-            nodeItem.TITLE = item.Title
-            nodeItem.HDPOSTERURL = item.Poster
-            nodeItem.imdbID = item.imdbID
+            nodeItem.update({
+                imdbid: item.imdbid
+                contentType: item.type
+                title: item.title
+                hdPosterUrl: item.poster
+            }, true)
             responseContent.appendChild(nodeItem)
         end for
         m.posterGrid.content = responseContent
@@ -120,6 +134,12 @@ sub onFocusChangedForEdge(event as Object)
     if focusedChild <> invalid and focusedChild.x = 0
         m.keyboard.setFocus(true)
     end if
+end sub
+
+sub onItemSelected(event as Object)
+    selectedChildIndex = event.getData()
+    child = m.posterGrid.content.getChild(selectedChildIndex)
+    m.top.imdbidSelected = child.imdbid
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean

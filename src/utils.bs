@@ -35,3 +35,12 @@ end function
 function isInvalid(item as Object) as Boolean
     return item = invalid
 end function
+
+' Create a ContentNode from AA
+function convertAAtoCN(aa = {} as Object) as Object
+    cn = createObject("roSGNode", "ContentNode")
+    for each key in aa.keys()
+        cn[key] = aa[key]
+    end for
+    return cn
+end function

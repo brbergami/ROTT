@@ -117,11 +117,11 @@ end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
     if not press then return false
-    handled = false
     if  key = "back"
         m.player.control = "stop"
         m.player.content = invalid
         m.top.close = true
+        return true
     end if
-    return handled
+    return false
 end function
