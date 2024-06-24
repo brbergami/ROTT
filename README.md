@@ -8,7 +8,7 @@ Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and
 - [x] Base app.
 - [x] Use an open database of movies to display on a grid.
 - [x] Create detailed view of individual content.
-- [ ] Create video player with playable content.
+- [x] Create video player with playable content.
 - [ ] Integrate Unit Testing (Roca / Rooibos).
 - [ ] Double check entire app and latest version of BrighterScript for any upgradeable code BRS -> BS.
 
