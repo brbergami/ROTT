@@ -4,8 +4,8 @@ sub init()
     m.top.id = "PosterView"
     m.top.backgroundColor = "0x1F2430"
     bindComponents()
-    setStyles()
     hookObservers()
+    setStyles()
     ' Handle the m.top.content to display
 end sub
 
@@ -16,6 +16,10 @@ sub bindComponents()
     m.contentTitle = m.top.findNode("contentTitle")
     m.contentYear = m.top.findNode("contentYear")
     m.contentDescription = m.top.findNode("contentDescription")
+end sub
+
+sub hookObservers()
+    m.top.observeField("content", "onContentChanged")
 end sub
 
 sub setStyles()
@@ -54,10 +58,6 @@ sub setStyles()
     m.contentDescription.ellipsizeOnBoundary = true
     m.contentDescription.wrap = true
     m.contentDescription.maxWidth = 384
-end sub
-
-sub hookObservers()
-    m.top.observeField("content", "onContentChanged")
 end sub
 
 sub onContentChanged(event as Object)

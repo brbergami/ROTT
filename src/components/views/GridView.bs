@@ -7,8 +7,8 @@ sub init()
     m.top.backgroundColor = "0x1F2430"
     m.lastTextInput = ""
     bindComponents()
-    setStyles()
     hookObservers()
+    setStyles()
     m.keyboard.setFocus(true)
 end sub
 
@@ -20,6 +20,12 @@ sub bindComponents()
     m.gridInfoLabel = m.top.findNode("gridInfoLabel")
     m.keyboardTimer = m.top.findNode("keyboardTimer")
     m.requestsTask = createObject("roSGNode", "RequestsTask")
+end sub
+
+sub hookObservers()
+    m.keyboard.observeField("text", "onKeyboardTextChange")
+    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdges")
+    m.requestsTask.observeField("response", "onSearchResponse")
 end sub
 
 sub setStyles()
@@ -51,12 +57,6 @@ sub setStyles()
     m.gridInfoLabel.text = "No results available"
 
     m.keyboardTimer.duration = 3
-end sub
-
-sub hookObservers()
-    m.keyboard.observeField("text", "onKeyboardTextChange")
-    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdges")
-    m.requestsTask.observeField("response", "onSearchResponse")
 end sub
 
 sub onKeyboardTextChange(event as Object)

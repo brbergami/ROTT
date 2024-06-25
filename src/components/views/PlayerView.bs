@@ -5,8 +5,8 @@ const TEST_VIDEO_URL_FLOWPLAYER = "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc
 
 sub init()
     bindComponents()
-    setStyles()
     hookObservers()
+    setStyles()
 end sub
 
 sub bindComponents()
@@ -17,6 +17,14 @@ sub bindComponents()
     m.rewindButton = m.top.findNode("rewindButton")
     m.playPauseButton = m.top.findNode("playPauseButton")
     m.forwardButton = m.top.findNode("forwardButton")
+end sub
+
+sub hookObservers()
+    ' m.player.observeField("content", "playContent") ' Disabled for testing, check for the alias "player.content"
+    m.player.observeField("state", "onPlayerStateChange")
+    ' m.rewindButton.observeField("buttonSelected", "onRewindButtonPressed")
+    ' m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
+    ' m.forwardButton.observeField("buttonSelected", "onForwardButtonPressed")
 end sub
 
 sub setStyles()
@@ -54,14 +62,6 @@ sub setStyles()
     ' m.forwardButton.translation = [ 1130, 480 ]
     ' m.forwardButton.width = 120
     ' m.forwardButton.height = 120
-end sub
-
-sub hookObservers()
-    ' m.player.observeField("content", "playContent") ' Disabled for testing, check for the alias "player.content"
-    m.player.observeField("state", "onPlayerStateChange")
-    ' m.rewindButton.observeField("buttonSelected", "onRewindButtonPressed")
-    ' m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
-    ' m.forwardButton.observeField("buttonSelected", "onForwardButtonPressed")
 end sub
 
 sub onPlayPauseButtonPressed()
