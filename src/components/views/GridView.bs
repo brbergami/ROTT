@@ -4,7 +4,6 @@ const OMDB_API_KEY = getConfigVar("apiConfig.OMDB.API_KEY")
 
 sub init()
     m.top.id = "GridView"
-    m.top.backgroundColor = "0x1F2430"
     m.lastTextInput = ""
     bindComponents()
     hookObservers()
