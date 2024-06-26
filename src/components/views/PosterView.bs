@@ -21,7 +21,8 @@ sub bindComponents()
 end sub
 
 sub hookObservers()
-    m.top.observeField("content", "onContentChanged")
+    m.top.observeField("imdbid", "requestTitleDetails")
+    m.requestsTask.observeField("response", "onTitleResponse")
 end sub
 
 sub setStyles()
@@ -60,11 +61,6 @@ sub setStyles()
     m.contentDescription.ellipsizeOnBoundary = true
     m.contentDescription.wrap = true
     m.contentDescription.maxWidth = 384
-end sub
-
-sub hookObservers()
-    m.top.observeField("imdbid", "requestTitleDetails")
-    m.requestsTask.observeField("response", "onTitleResponse")
 end sub
 
 sub requestTitleDetails(event as Object)

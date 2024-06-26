@@ -22,8 +22,10 @@ sub bindComponents()
 end sub
 
 sub hookObservers()
+    m.top.observeField("visible", "onVisibleChange")
     m.keyboard.observeField("text", "onKeyboardTextChange")
-    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdges")
+    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdge")
+    m.posterGrid.observeField("itemSelected", "onItemSelected")
     m.requestsTask.observeField("response", "onSearchResponse")
 end sub
 
@@ -56,14 +58,6 @@ sub setStyles()
     m.gridInfoLabel.text = "No results available"
 
     m.keyboardTimer.duration = 3
-end sub
-
-sub hookObservers()
-    m.top.observeField("visible", "onVisibleChange")
-    m.keyboard.observeField("text", "onKeyboardTextChange")
-    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdge")
-    m.posterGrid.observeField("itemSelected", "onItemSelected")
-    m.requestsTask.observeField("response", "onSearchResponse")
 end sub
 
 sub onVisibleChange(event as Object)
