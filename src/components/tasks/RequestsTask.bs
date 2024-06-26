@@ -1,6 +1,6 @@
 sub init()
     m.top.functionName = "createRequest"
-    m.top.timeoutSeconds = 1 ' For POST requests, converts to milliseconds
+    m.timeoutSeconds = 1 ' For POST requests, converts to milliseconds
 end sub
 
 ' Request AA format ---------------------------------------
@@ -44,7 +44,7 @@ sub createRequest()
         urlTransfer.setPort(createObject("roMessagePort"))
         urlTransfer.setRequest("Content-Type", "application/json")
         urlTransfer.asyncPostFromString(encodedParams)
-        urlResponse = wait(m.top.timeoutSeconds * 1000, urlTransfer.getMessagePort())
+        urlResponse = wait(m.timeoutSeconds * 1000, urlTransfer.getMessagePort())
         responseBody = urlResponse.getString()
         responseCode = urlResponse.getResponseCode()
     end if
