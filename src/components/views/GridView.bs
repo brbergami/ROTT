@@ -23,7 +23,6 @@ end sub
 sub hookObservers()
     m.top.observeField("visible", "onVisibleChange")
     m.keyboard.observeField("text", "onKeyboardTextChange")
-    m.posterGrid.observeField("focusedChild", "onFocusChangedForEdge")
     m.posterGrid.observeField("itemSelected", "onItemSelected")
     m.requestsTask.observeField("response", "onSearchResponse")
 end sub
@@ -133,13 +132,6 @@ sub onSearchResponse(event as Object)
     end if
 end sub
 
-sub onFocusChangedForEdge(event as Object)
-    focusedChild = event.getData()
-    if focusedChild <> invalid and focusedChild.x = 0
-        m.keyboard.setFocus(true)
-    end if
-end sub
-
 sub onItemSelected(event as Object)
     selectedChildIndex = event.getData()
     child = m.posterGrid.content.getChild(selectedChildIndex)
@@ -152,9 +144,11 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         m.top.close = true
         return true
     else if key = "left"
-        ' return true
+        if m.posterGrid.currFocusColumn = 0
+            m.keyboard.setFocus(true)
+        end if
+        return true
     else if key = "right"
-        ' return true
     else if key = "up"
         ' return true
     else if key = "down"
