@@ -3,7 +3,7 @@
     <interface>
         <field id="close" type="string" />
         <field id="imdbid" type="string" />
-        <field id="playVideo" type="boolean" />
+        <field id="playVideo" type="node" alwaysNotify="true" />
     </interface>
     <children>
         <Poster

@@ -2,7 +2,7 @@
 <component name="PlayerView" extends="Group" >
     <interface>
         <field id="close" type="boolean" value="false" />
-        <field id="content" type="node" />
+        <field id="content" type="node" alwaysNotify="true" />
     </interface>
     <children>
         <Video

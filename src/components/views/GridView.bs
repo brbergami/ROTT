@@ -8,7 +8,6 @@ sub init()
     bindComponents()
     hookObservers()
     setStyles()
-    m.keyboard.setFocus(true)
 end sub
 
 sub bindComponents()
@@ -67,6 +66,8 @@ sub setStyles()
     m.gridInfoLabel.text = "No results available"
 
     m.keyboardTimer.duration = 3
+
+    m.keyboard.setFocus(true)
 end sub
 
 sub onVisibleChange(event as Object)

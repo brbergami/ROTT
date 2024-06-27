@@ -13,5 +13,6 @@ sub onCloseRequested(event as Object)
 end sub
 
 sub onPlayButtonSelected()
+    ' Unnecessary now for the lack of real content, but should pass video data
     showPlayerView()
 end sub
