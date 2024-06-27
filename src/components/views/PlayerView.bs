@@ -1,7 +1,9 @@
 import "pkg:/utils.bs"
-const TEST_VIDEO_URL_MUX = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" ' Big Buck Bunny video HLS
-const TEST_VIDEO_URL_BITMOVIN = "https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" ' Bitmovin video HLS
-const TEST_VIDEO_URL_FLOWPLAYER = "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8" ' Flowplayer video HLS
+const TEST_VIDEO_LIST = [ ' HLS Test Streams
+    ["Big Buck Bunny", "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"]
+    ["Art of Motion", "https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"]
+    ["Flowplayer", "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"]
+]
 
 sub init()
     bindComponents()
@@ -87,10 +89,11 @@ sub playContent()
         ' Check because this could be triggered by the alias "player.content"
         m.player.content = m.top.content
     else
+        randomTestVideo = TEST_VIDEO_LIST[ rnd(TEST_VIDEO_LIST.count() - 1) ] ' Select a random video from the list
         mediaContent = createObject("roSGNode", "ContentNode")
-        mediaContent.title = "Big Buck Bunny fallback test video"
+        mediaContent.title = randomTestVideo[0]
+        mediaContent.url = randomTestVideo[1]
         mediaContent.streamFormat = "hls"
-        mediaContent.url = TEST_VIDEO_URL_MUX
         m.player.content = mediaContent
     end if
     m.player.control = "play"
