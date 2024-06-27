@@ -17,6 +17,7 @@ sub bindComponents()
     m.contentTitle = m.top.findNode("contentTitle")
     m.contentYear = m.top.findNode("contentYear")
     m.contentDescription = m.top.findNode("contentDescription")
+    m.playButton = m.top.findNode("playButton")
     m.requestsTask = createObject("roSGNode", "RequestsTask")
 end sub
 
@@ -48,19 +49,34 @@ sub setStyles()
 
     m.contentTitle.translation = [ sqMarginBig, sqMarginBig ]
     m.contentTitle.width = 426
-    m.contentTitle.font = "font:MediumBoldSystemFont"
+    m.contentTitle.font  = createObject("roSGNode", "Font")
+    m.contentTitle.font.uri = "pkg:/fonts/Gotham-Bold.otf"
+    m.contentTitle.font.size = 36
 
     m.contentYear.translation = [ sqMarginBig, 120 ]
     m.contentYear.width = 426
-    m.contentYear.font = "font:LargeBoldSystemFont"
+    m.contentYear.font  = createObject("roSGNode", "Font")
+    m.contentYear.font.uri = "pkg:/fonts/Gotham-Book.otf"
+    m.contentYear.font.size = 24
 
     m.contentDescription.translation = [ sqMarginBig, 150 ]
     m.contentDescription.width = 426
     m.contentDescription.height = 491
-    m.contentDescription.font = "font:SmallSystemFont"
     m.contentDescription.ellipsizeOnBoundary = true
     m.contentDescription.wrap = true
     m.contentDescription.maxWidth = 384
+    m.contentDescription.font  = createObject("roSGNode", "Font")
+    m.contentDescription.font.uri = "pkg:/fonts/Gotham-Book.otf"
+    m.contentDescription.font.size = 20
+
+    m.playButton.translation = [ sqMarginBig, 650 ]
+    m.playButton.width = 426
+    m.playButton.height = 60
+    playButtonFont  = createObject("roSGNode", "Font")
+    playButtonFont.uri = "pkg:/fonts/Gotham-Book.otf"
+    playButtonFont.size = 24
+    m.playButton.getChildren(-1, 0)[2]["font"] = playButtonFont
+    m.playButton.text = "Play Movie"
 end sub
 
 sub requestTitleDetails(event as Object)

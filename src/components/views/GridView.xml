@@ -14,6 +14,7 @@
         <MiniKeyboard
             id="keyboard"
             />
+        <!-- TBD: Upgrade this into a more customizable grid component in the future -->
         <PosterGrid
             id="posterGrid"
             />

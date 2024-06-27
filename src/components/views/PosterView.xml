@@ -23,6 +23,9 @@
             <Label
                 id="contentDescription"
                 />
+            <Button
+                id="playButton"
+                />
         </GroupLayout>
     </children>
 </component>

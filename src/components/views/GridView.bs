@@ -31,17 +31,25 @@ end sub
 
 sub setStyles()
     m.titleLabel.translation = [ 120, 100 ]
+    m.titleLabel.font  = createObject("roSGNode", "Font")
+    m.titleLabel.font.uri = "pkg:/fonts/Gotham-Bold.otf"
+    m.titleLabel.font.size = 36
     m.titleLabel.text = "Movies, series and episodes!"
-    m.titleLabel.font = "font:LargeBoldSystemFont"
 
     m.descriptionLabel.translation = [ 120, 160 ]
+    m.descriptionLabel.font  = createObject("roSGNode", "Font")
+    m.descriptionLabel.font.uri = "pkg:/fonts/Gotham-Book.otf"
+    m.descriptionLabel.font.size = 20
     m.descriptionLabel.text = "Search for content info using OMDB database. You need a valid API key to use their service in this view."
-    m.descriptionLabel.font = "font:SmallestSystemFont"
 
     ' VoiceTextEditBox
     ' Check if a voice keyboard can be integrated or it's pointless with the MiniKeyboard + RC VoiceOver
 
     m.keyboard.translation = [ 100, 250 ]
+    keyboardFont = createObject("roSGNode", "Font")
+    keyboardFont.uri = "pkg:/fonts/Gotham-Book.otf"
+    keyboardFont.size = 34
+    m.keyboard.textEditBox.getChildren(-1, 0)[1]["font"] = keyboardFont
     m.keyboard.textEditBox.hintText = "Start typing here"
 
     m.posterGrid.visible = false
@@ -52,9 +60,10 @@ sub setStyles()
     m.posterGrid.numColumns = 4
     m.posterGrid.numRows = 3
 
-    m.gridInfoLabel.visible = true
-    m.gridInfoLabel.translation = [ 960, 540 ] ' TDB: Relative position based in parent
-    m.gridInfoLabel.font.size = 16
+    m.gridInfoLabel.translation = [ 1200, 540 ]
+    m.gridInfoLabel.font  = createObject("roSGNode", "Font")
+    m.gridInfoLabel.font.uri = "pkg:/fonts/Gotham-Book.otf"
+    m.gridInfoLabel.font.size = 30
     m.gridInfoLabel.text = "No results available"
 
     m.keyboardTimer.duration = 3
