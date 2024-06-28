@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<component name="GridView" extends="Group" initialFocus="posterGrid" >
+<component name="GridView" extends="Group" initialFocus="keyboard" >
     <interface>
         <field id="close" type="boolean" value="false" />
         <field id="imdbidSelected" type="string" />
     </interface>
     <children>
-        <Label
-            id="titleLabel"
-            />
-        <Label
-            id="descriptionLabel"
-            />
-        <MiniKeyboard
-            id="keyboard"
-            />
-        <!-- TBD: Upgrade this into a more customizable grid component in the future -->
-        <PosterGrid
-            id="posterGrid"
-            />
+        <LayoutGroup
+            id="mainLayout"
+            >
+            <LayoutGroup
+                id="topLayout"
+                >
+                <Label
+                    id="titleLabel"
+                    />
+                <Label
+                    id="descriptionLabel"
+                    />
+                <LayoutGroup
+                    id="innerLayout"
+                    >
+                    <MiniKeyboard
+                        id="keyboard"
+                        />
+                    <!-- TBD: Upgrade this into a more customizable grid component in the future -->
+                    <PosterGrid
+                        id="posterGrid"
+                        >
+                    </PosterGrid>
+                </LayoutGroup>
+            </LayoutGroup>
+        </LayoutGroup>
         <Label
             id="gridInfoLabel"
             />

@@ -64,13 +64,11 @@ sub setStyles()
     m.contentDescription.height = 491
     m.contentDescription.ellipsizeOnBoundary = true
     m.contentDescription.wrap = true
-    m.contentDescription.maxWidth = 384
     m.contentDescription.font  = createObject("roSGNode", "Font")
     m.contentDescription.font.uri = "pkg:/fonts/Gotham-Book.otf"
     m.contentDescription.font.size = 20
 
     m.playButton.translation = [ sqMarginBig, 650 ]
-    m.playButton.width = 426
     m.playButton.height = 60
     playButtonFont  = createObject("roSGNode", "Font")
     playButtonFont.uri = "pkg:/fonts/Gotham-Book.otf"
