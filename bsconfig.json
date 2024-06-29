@@ -1,5 +1,5 @@
 {
-    "rootDir": "src",
+    // "rootDir": "src",
     "files": [
         "**/*"
     ],

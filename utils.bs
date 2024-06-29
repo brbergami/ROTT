@@ -4,6 +4,11 @@ function getConfigVar(variable as String) as Dynamic
     return routeToObject(appConfig, variable)
 end function
 
+function getEnvVar(variable as String) as Dynamic
+    envVar = parseJSON(readAsciiFile("pkg:/envVar.json"))
+    return routeToObject(envVar, variable)
+end function
+
 ' Object route for an object
 function routeToObject(nestedObject as Object, route as String) as Dynamic
     result = nestedObject

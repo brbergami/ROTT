@@ -1,7 +1,6 @@
 {
-    "apiConfig": {
+    "api": {
         "OMDB": {
-            "API": "http://www.omdbapi.com/",
             "API_KEY": "asdf1234"
         }
     }

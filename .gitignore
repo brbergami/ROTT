@@ -4,3 +4,4 @@ out
 .roku-deploy-staging
 .DS_Store
 .env
+envVar.json

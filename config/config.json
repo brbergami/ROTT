@@ -1,0 +1,7 @@
+{
+    "apiConfig": {
+        "OMDB": {
+            "API": "http://www.omdbapi.com/"
+        }
+    }
+}

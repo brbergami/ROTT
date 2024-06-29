@@ -1,6 +1,6 @@
 import "pkg:/utils.bs"
 const OMDB_API_URL = getConfigVar("apiConfig.OMDB.API")
-const OMDB_API_KEY = getConfigVar("apiConfig.OMDB.API_KEY")
+const OMDB_API_KEY = getEnvVar("api.OMDB.API_KEY")
 
 sub init()
     m.top.id = "PosterView"
