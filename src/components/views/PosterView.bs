@@ -45,8 +45,7 @@ sub setStyles()
     m.divider.height = 960
     m.divider.color = "0xD3D3D3FF"
 
-    m.secondHalfGroup.translation = [ 1066, sqMarginBig ]
-    m.secondHalfGroup.clippingRect = [ sectorHeight, sectorWidth, 0, 0 ]
+    m.secondHalfGroup.translation = [ sqMarginSmall + 1066, sqMarginBig ]
     m.secondHalfGroup.itemSpacings = [ 27 ] ' Check if only for the vertical placement is ok
 
     m.contentTitle.width = 426

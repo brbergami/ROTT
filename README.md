@@ -1,8 +1,23 @@
+![Image](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/logos%20and%20icons/banner-big.png)
+
 # ROTT
 ROTT is a personal OTT channel project made with love using BrightScript, BrighterScript and SceneGraph for fun and educational purposes.
 
+> [!IMPORTANT]
+> It's a continuously growing personal project, take it as it is.
+
 ## BrighterScript based project
-Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and initially forked from [BrighterScript-Template](https://github.com/rokucommunity/brighterscript-template). Collection video gallery is from https://jonathanbduval.com, made available inside this repo for HA. HLS streams are Big Buck Bunny =:3 from https://test-streams.mux.dev, Video test from Bitmovin https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8 and Video Test from Flowplayer https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8. Icons by https://remixicon.com/.
+Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and initially forked from [BrighterScript-Template](https://github.com/rokucommunity/brighterscript-template). HLS streams are Big Buck Bunny =:3 from https://test-streams.mux.dev, Video test from Bitmovin https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8 and Video Test from Flowplayer https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8. Icons by https://remixicon.com/.
+
+## Screenshots:
+### Search
+[![search](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/search-populated.png)](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/search-populated.png)
+
+### Poster details
+[![details](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/poster-view.png)](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/poster-view.png)
+
+### HLS streaming playing
+https://github.com/brbergami/ux/raw/main/ux/screenshots/launching-hls.mp4
 
 ## To-do milestone list:
 - [x] Base app.
