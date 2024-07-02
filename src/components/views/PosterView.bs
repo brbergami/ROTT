@@ -27,15 +27,17 @@ sub hookObservers()
 end sub
 
 sub setStyles()
-    sqMarginSmall = 90
+    sqMarginSmall = 100
     sqMarginBig = sqMarginSmall * 2
+    sectorWidth = 550
+    sectorHeight = sectorWidth * 2
     ' Should set some rules here to make it play well taking display
     ' size and using rule of three to calculate the sizes
 
     ' TBD: Create a mask for the posters, maybe..
     m.poster.translation = [ sqMarginBig, sqMarginBig ]
-    m.poster.width = 640
-    m.poster.height = 960
+    m.poster.width = sectorWidth
+    m.poster.height = sectorHeight
     m.poster.loadDisplayMode = "scaleToZoom"
 
     m.divider.translation = [ 959, sqMarginBig ]
@@ -43,11 +45,10 @@ sub setStyles()
     m.divider.height = 960
     m.divider.color = "0xD3D3D3FF"
 
-    m.secondHalfGroup.translation = [ 1066, 100 ]
-    m.secondHalfGroup.clippingRect = [ sqMarginSmall, sqMarginSmall, m.poster.width-sqMarginSmall, m.poster.height-sqMarginSmall ]
+    m.secondHalfGroup.translation = [ 1066, sqMarginBig ]
+    m.secondHalfGroup.clippingRect = [ sectorHeight, sectorWidth, 0, 0 ]
     m.secondHalfGroup.itemSpacings = [ 27 ] ' Check if only for the vertical placement is ok
 
-    m.contentTitle.translation = [ sqMarginBig, sqMarginBig ]
     m.contentTitle.width = 426
     m.contentTitle.font  = createObject("roSGNode", "Font")
     m.contentTitle.font.uri = "pkg:/fonts/Gotham-Bold.otf"
