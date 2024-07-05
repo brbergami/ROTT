@@ -1,0 +1,58 @@
+' config = {
+'     bgWidth: Integer,
+'     bgHeight: Integet,
+'     fontSize: Integer,
+'     text: String
+' }
+
+sub init()
+    bindComponents()
+    setStyles()
+    hookObservers()
+end sub
+
+sub bindComponents()
+    m.buttonBg = m.top.findNode("buttonBg")
+    m.buttonLabel = m.top.findNode("buttonLabel")
+end sub
+
+sub hookObservers()
+    m.top.observeField("config", "applyCustomConfig")
+end sub
+
+sub setStyles()
+    m.buttonBg.width = 300
+    m.buttonBg.height = 80
+    m.buttonBg.uri = "pkg:/images/buttonc_background.9.png"
+
+    font = CreateObject("roSGNode", "Font")
+    font.uri = "pkg:/fonts/Gotham-Bold.otf"
+    font.size = 30
+    m.buttonLabel.font = font
+    m.buttonLabel.text = "Accept"
+    m.buttonLabel.horizAlign = "center"
+    m.buttonLabel.vertAlign = "center"
+    m.buttonLabel.width = m.buttonBg.width
+    m.buttonLabel.height = m.buttonBg.height
+    m.buttonLabel.color = "0xFFFFFF"
+end sub
+
+sub applyCustomConfig(event as Object)
+    config = event.getData()
+    if config.count = 0 then return
+
+    m.buttonBg.width = config.bgWidth
+    m.buttonBg.height = config.bgHeight
+
+    m.buttonLabel.text = config.text
+    m.buttonLabel.width = m.buttonBg.width
+    m.buttonLabel.height = m.buttonBg.height
+end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    if not press then return false
+    if key = "OK"
+        m.top.buttonSelected = true
+    end if
+    return false
+end function

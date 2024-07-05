@@ -23,7 +23,7 @@
             <Label
                 id="contentDescription"
                 />
-            <Button
+            <ButtonC
                 id="playButton"
                 />
         </GroupLayout>

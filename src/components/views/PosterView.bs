@@ -68,13 +68,13 @@ sub setStyles()
     m.contentDescription.font.uri = "pkg:/fonts/Gotham-Book.otf"
     m.contentDescription.font.size = 20
 
-    m.playButton.translation = [ sqMarginBig, 650 ]
-    m.playButton.height = 60
-    playButtonFont  = createObject("roSGNode", "Font")
-    playButtonFont.uri = "pkg:/fonts/Gotham-Book.otf"
-    playButtonFont.size = 24
-    m.playButton.getChildren(-1, 0)[2]["font"] = playButtonFont
-    m.playButton.text = "Play Movie"
+    m.playButton.translation = [ 1440, 650 ]
+    m.playButton.config = {
+        bgWidth: 300
+        bgHeight: 80
+        fontSize: 30
+        text: "Play Video"
+    }
 end sub
 
 sub requestTitleDetails(event as Object)
