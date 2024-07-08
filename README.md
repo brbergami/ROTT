@@ -1,4 +1,4 @@
-![Image](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/logos%20and%20icons/banner-big.png)
+![Banner](https://github.com/brbergami/ux/blob/main/ux/logos%20and%20icons/banner-big.png)
 
 # ROTT
 ROTT is a personal OTT channel project made with love using BrightScript, BrighterScript and SceneGraph for fun and educational purposes.
@@ -11,13 +11,13 @@ Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and
 
 ## Screenshots:
 ### Search
-[![search](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/search-populated.png)](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/search-populated.png)
+![search](https://github.com/brbergami/ux/blob/main/ux/screenshots/search-populated.png)
 
 ### Poster details
-[![details](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/poster-view.png)](https://raw.githubusercontent.com/brbergami/ux/6987930ac1d606d19d8059a74053886bcb27b2ec/ux/screenshots/poster-view.png)
+![details](https://github.com/brbergami/ux/blob/main/ux/screenshots/poster-view.png)
 
 ### HLS streaming playing
-https://github.com/brbergami/ux/raw/main/ux/screenshots/launching-hls.mp4
+https://github.com/brbergami/ux/blob/main/ux/screenshots/launching-hls.mp4
 
 ## To-do milestone list:
 - [x] Base app.
