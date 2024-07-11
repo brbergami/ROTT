@@ -8,7 +8,7 @@
         <Video
             id="player"
             >
-            <MaskGroup
+            <!-- <MaskGroup
                 id="maskGroup"
                 >
                 <Button
@@ -27,7 +27,7 @@
                 <Vector2DFieldInterpolator
                     id="maskGroupAnimationInterpolator"
                      />
-            </Animation>
+            </Animation> -->
         </Videoplayer>
     </children>
 </component>

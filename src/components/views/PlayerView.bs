@@ -13,12 +13,12 @@ end sub
 
 sub bindComponents()
     m.player = m.top.findNode("player")
-    m.maskGroup = m.top.findNode("maskGroup")
-    m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
-    m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
-    m.rewindButton = m.top.findNode("rewindButton")
-    m.playPauseButton = m.top.findNode("playPauseButton")
-    m.forwardButton = m.top.findNode("forwardButton")
+    ' m.maskGroup = m.top.findNode("maskGroup")
+    ' m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
+    ' m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
+    ' m.rewindButton = m.top.findNode("rewindButton")
+    ' m.playPauseButton = m.top.findNode("playPauseButton")
+    ' m.forwardButton = m.top.findNode("forwardButton")
 end sub
 
 sub hookObservers()
@@ -66,22 +66,6 @@ sub setStyles()
     ' m.forwardButton.height = 120
 end sub
 
-sub onPlayPauseButtonPressed()
-    ' TBD: Logic to handle all the buttons via event loop listener
-    ' m.playPauseButton.iconUri = (m.player.state = "playing") ? "pkg:/images/button-pause.png" : "pkg:/images/button-play.png"
-    m.player.control = (m.player.state = "playing") ? "pause" : "resume"
-end sub
-
-sub onRewindButtonPressed()
-    ' Check this can take negative values
-    m.player.seek = m.player.duration - 15
-end sub
-
-sub onForwardButtonPressed()
-    ' Check this can take values passing the duration of the video
-    m.player.seek = m.player.duration + 15
-end sub
-
 sub playContent()
     ' Check fast video start https://developer.roku.com/en-ca/docs/developer-program/media-playback/fast-video-start.md
     ' TBD: Add complete trickmode playing https://developer.roku.com/en-ca/docs/developer-program/media-playback/trick-mode/hls-and-dash.md
@@ -124,6 +108,20 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         m.player.control = "stop"
         m.player.content = invalid
         m.top.close = true
+        return true
+    else if key = "OK"
+        ' TBD: Toggle controls overlay
+        return true
+    else if key = "play"
+        ' TBD: Logic to handle all the buttons via event loop listener
+        ' m.playPauseButton.iconUri = (m.player.state = "playing") ? "pkg:/images/button-pause.png" : "pkg:/images/button-play.png"
+        m.player.control = (m.player.state = "playing") ? "pause" : "resume"
+        return true
+    else if key = "left"
+        m.player.seek = m.player.position - 15
+        return true
+    else if key = "right"
+        m.player.seek = m.player.position + 15
         return true
     end if
     return false
