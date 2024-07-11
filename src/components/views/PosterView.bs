@@ -21,6 +21,7 @@ sub bindComponents()
 end sub
 
 sub hookObservers()
+    m.top.observeField("visible", "onVisibleChange")
     m.top.observeField("imdbid", "requestTitleDetails")
     m.requestsTask.observeField("response", "onTitleResponse")
     m.playButton.observeField("buttonSelected", "onPlayButtonSelected")
@@ -75,6 +76,11 @@ sub setStyles()
         fontSize: 30
         text: "Play Video"
     }
+end sub
+
+sub onVisibleChange(event as Object)
+    visible = event.getData()
+    if visible then m.playButton.setFocus(true)
 end sub
 
 sub requestTitleDetails(event as Object)
