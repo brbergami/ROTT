@@ -2,7 +2,7 @@
 <component name="GridView" extends="Group" initialFocus="keyboard" >
     <interface>
         <field id="close" type="boolean" value="false" />
-        <field id="imdbidSelected" type="string" />
+        <field id="imdbidSelected" type="string" alwaysNotify="true" />
     </interface>
     <children>
         <LayoutGroup

@@ -163,8 +163,8 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     else if key = "left"
         if m.posterGrid.hasFocus() and m.posterGrid.currFocusColumn = 0 ' Check this, maybe this is set invalid when no focus is on it
             m.keyboard.setFocus(true)
+            return true
         end if
-        return true
     else if key = "right"
     else if key = "up"
         ' return true
