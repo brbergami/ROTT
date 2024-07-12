@@ -1,8 +1,12 @@
 import "pkg:/utils.bs"
 const TEST_VIDEO_LIST = [ ' HLS Test Streams
-    ["Big Buck Bunny", "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"]
-    ["Art of Motion", "https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"]
-    ["Flowplayer", "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"]
+    ["Mux.dev - Big Buck Bunny - HLS", "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"]
+    ["Bitmovin - Art of Motion - HLS", "https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"]
+    ["Flowplayer - Video demo - HLS", "https://flowplayer.org/hls/flowplayer-demo.m3u8"]
+    ["Flowplayer - Video demo - HLS", "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"]
+    ["Akamaized - Big Buck Bunny - DASH", "https://dash.akamaized.net/dash264/TestCases/1a/netflix/exMPD_BBB_6s_sliding.zip.mpd"]
+    ["Akamaihd - Syntel - DASH", "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd"]
+    ["Flowplayer - Video demo - DASH", "https://flowplayer.org/dash/flowplayer-demo.mpd"]
 ]
 
 sub init()
@@ -33,6 +37,7 @@ sub setStyles()
     m.player.width = 1920
     m.player.height = 1080
     m.player.maxVideoDecodeResolution = [ 1080, 1920 ]
+    m.enableUI = false
     playContent()
     ' TBD: Add mechanism for making a good use of "prebuffer"
 
@@ -77,8 +82,9 @@ sub playContent()
         mediaContent = createObject("roSGNode", "ContentNode")
         mediaContent.title = randomTestVideo[0]
         mediaContent.url = randomTestVideo[1]
-        mediaContent.streamFormat = "hls"
+        mediaContent.streamFormat = mediaContent.url.endsWith("mpd") ? "dash" : "hls"
         m.player.content = mediaContent
+        m.player.loop = true
     end if
     m.player.control = "play"
 end sub
