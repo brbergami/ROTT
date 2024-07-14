@@ -2,7 +2,7 @@
 <component name="ButtonC" extends="Group">
     <interface>
         <field id="buttonText" type="string" />
-        <field id="buttonSelected" type="boolean" value="false" />
+        <field id="buttonSelected" type="boolean" value="false" alwaysNotify="true" />
         <field id="config" type="assocarray" value="{}" />
     </interface>
 
