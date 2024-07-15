@@ -11,13 +11,13 @@ Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and
 
 ## Screenshots:
 ### Search
-![search](https://github.com/brbergami/ux/blob/main/ux/screenshots/search-populated.png)
+![Search](https://github.com/brbergami/ux/blob/main/ux/screenshots/search-populated.png)
 
 ### Poster details
-![details](https://github.com/brbergami/ux/blob/main/ux/screenshots/poster-view.png)
+![Details](https://github.com/brbergami/ux/blob/main/ux/screenshots/poster-view.png)
 
-### HLS streaming playing
-https://github.com/brbergami/ux/blob/main/ux/screenshots/launching-hls.mp4
+### Video streaming playing
+![Demo](https://github.com/brbergami/ux/blob/main/ux/screenshots/complete-preview.gif?raw=true)
 
 ## To-do milestone list:
 - [x] Base app.
