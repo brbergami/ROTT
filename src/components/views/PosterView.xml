@@ -27,5 +27,8 @@
                 id="playButton"
                 />
         </GroupLayout>
+        <PlayerView
+            id="playerView"
+            />
     </children>
 </component>

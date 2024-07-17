@@ -1,11 +1,12 @@
 import "pkg:/utils.bs"
-const TEST_VIDEO_LIST = [ ' HLS Test Streams
+const TEST_VIDEO_LIST = [
     ["Mux.dev - Big Buck Bunny - HLS", "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"]
     ["Flowplayer - Video demo - HLS", "https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"]
     ["Bitmovin - Syntel - DASH", "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd"]
 ]
 
 sub init()
+    m.top.id = "PlayerView"
     bindComponents()
     hookObservers()
     setStyles()
@@ -13,63 +14,74 @@ end sub
 
 sub bindComponents()
     m.player = m.top.findNode("player")
-    ' m.maskGroup = m.top.findNode("maskGroup")
-    ' m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
-    ' m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
-    ' m.rewindButton = m.top.findNode("rewindButton")
-    ' m.playPauseButton = m.top.findNode("playPauseButton")
-    ' m.forwardButton = m.top.findNode("forwardButton")
+    m.maskGroup = m.top.findNode("maskGroup")
+    m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
+    m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
+    m.jumpBackwardButton = m.top.findNode("jumpBackwardButton")
+    m.playPauseButton = m.top.findNode("playPauseButton")
+    m.jumpForwardButton = m.top.findNode("jumpForwardButton")
 end sub
 
 sub hookObservers()
-    ' m.player.observeField("content", "playContent") ' Disabled for testing, check for the alias "player.content"
+    m.top.observeField("content", "onContentSet") ' Check for the alias "player.content"
+    m.top.observeField("play", "playContent")
+    m.top.observeField("stopPrebuffer", "onStopPrebuffer")
     m.player.observeField("state", "onPlayerStateChange")
-    ' m.rewindButton.observeField("buttonSelected", "onRewindButtonPressed")
-    ' m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
-    ' m.forwardButton.observeField("buttonSelected", "onForwardButtonPressed")
+    m.jumpBackwardButton.observeField("buttonSelected", "onJumpBackwardButtonPressed")
+    m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
+    m.jumpForwardButton.observeField("buttonSelected", "onJumpForwardButtonPressed")
 end sub
 
 sub setStyles()
+    ' TBD: Define logic fade-in/fade-out for mask
+    m.top.visible = false
+
     m.player.width = 1920
     m.player.height = 1080
     m.player.maxVideoDecodeResolution = [ 1080, 1920 ]
-    m.enableUI = false
-    playContent()
-    ' TBD: Add mechanism for making a good use of "prebuffer"
+    m.top.enableUI = false
 
-    ' TBD: Define logic fade-in/fade-out for mask
+    m.maskGroup.maskSize = [ 1920, 1080 ]
+    m.maskGroup.maskUri = "pkg:/images/transparent-mask.png"
+    m.maskGroup.maskOffset = [ -1920, 0 ] ' Fine tune this
 
-    ' m.maskGroup.maskSize = [ 1920, 1080 ]
-    ' m.maskGroup.maskUri = "pkg:/images/transparent-mask.png"
-    ' m.maskGroup.maskOffset = [ -1920, 0 ] ' Fine tune this
+    m.maskGroupAnimation.duration = 1
+    m.maskGroupAnimation.easeFunction = "linear"
+    m.maskGroupAnimation.control = "start"
 
-    ' m.maskGroupAnimation.duration = 1
-    ' m.maskGroupAnimation.easeFunction = "linear"
-    ' m.maskGroupAnimation.control = "start"
+    m.maskGroupAnimationInterpolator.fieldToInterp = "maskGroup.opacity"
+    m.maskGroupAnimationInterpolator.key = [ 0.0, 0.5, 1.0 ]
+    m.maskGroupAnimationInterpolator.keyValue = [ 0.0, 0.5, 1.0 ]
 
-    ' m.maskGroupAnimationInterpolator.fieldToInterp = "maskGroup.opacity"
-    ' m.maskGroupAnimationInterpolator.key = [ 0.0, 0.5, 1.0 ]
-    ' m.maskGroupAnimationInterpolator.keyValue = [ 0.0, 0.5, 1.0 ]
+    m.jumpBackwardButton.iconUri = "pkg:/images/button-rewind.png"
+    m.jumpBackwardButton.translation = [ 660, 480 ]
+    m.jumpBackwardButton.width = 120
+    m.jumpBackwardButton.height = 120
 
-    ' m.rewindButton.iconUri = "pkg:/images/button-rewind.png"
-    ' m.rewindButton.translation = [ 660, 480 ]
-    ' m.rewindButton.width = 120
-    ' m.rewindButton.height = 120
+    m.playPauseButton.iconUri = "pkg:/images/button-play.png"
+    m.playPauseButton.translation = [ 900, 480 ]
+    m.playPauseButton.width = 120
+    m.playPauseButton.height = 120
 
-    ' m.playPauseButton.iconUri = "pkg:/images/button-play.png"
-    ' m.playPauseButton.translation = [ 900, 480 ]
-    ' m.playPauseButton.width = 120
-    ' m.playPauseButton.height = 120
-
-    ' m.forwardButton.iconUri = "pkg:/images/button-forward.png"
-    ' m.forwardButton.translation = [ 1130, 480 ]
-    ' m.forwardButton.width = 120
-    ' m.forwardButton.height = 120
+    m.jumpForwardButton.iconUri = "pkg:/images/button-forward.png"
+    m.jumpForwardButton.translation = [ 1130, 480 ]
+    m.jumpForwardButton.width = 120
+    m.jumpForwardButton.height = 120
 end sub
 
-sub playContent()
-    ' Check fast video start https://developer.roku.com/en-ca/docs/developer-program/media-playback/fast-video-start.md
-    ' TBD: Add complete trickmode playing https://developer.roku.com/en-ca/docs/developer-program/media-playback/trick-mode/hls-and-dash.md
+sub onJumpBackwardButtonPressed()
+    ' Define behavior
+end sub
+
+sub onPlayPauseButtonPressed()
+    ' Define behavior
+end sub
+
+sub onJumpForwardButtonPressed()
+    ' Define behavior
+end sub
+
+sub onContentSet()
     if isNotInvalid(m.top.content)
         ' Check because this could be triggered by the alias "player.content"
         m.player.content = m.top.content
@@ -82,17 +94,27 @@ sub playContent()
         m.player.content = mediaContent
         m.player.loop = true
     end if
+    m.player.control = "prebuffer"
+end sub
+
+sub playContent()
+    ' TBD: Add trickmode playing https://developer.roku.com/en-ca/docs/developer-program/media-playback/trick-mode/hls-and-dash.md
+    m.top.visible = true
     m.player.control = "play"
+end sub
+
+sub onStopPrebuffer() ' This discards the prebuffering and flushes data
+    m.player.control = "stop"
 end sub
 
 sub onPlayerStateChange(event as Object)
     state = event.getData()
-    if state = "finished"
-        m.player.visible = false
-        m.player.control = "stop"
-        m.top.close = true
-    else if state = "error"
+    if state = "error"
         handlePlayerError()
+    ' else if state = "finished" ' Since we're looping the video, this doesn't makes sense right now
+    '     m.top.visible = false
+    '     m.player.control = "stop"
+    '     m.top.close = true
     end if
 end sub
 
@@ -107,12 +129,13 @@ end sub
 function onKeyEvent(key as String, press as Boolean) as Boolean
     if not press then return false
     if  key = "back"
+        m.top.visible = false
         m.player.control = "stop"
         m.player.content = invalid
         m.top.close = true
         return true
     else if key = "OK"
-        ' TBD: Toggle controls overlay
+        ' TBD: Toggle controls overlay?
         return true
     else if key = "play"
         ' TBD: Logic to handle all the buttons via event loop listener

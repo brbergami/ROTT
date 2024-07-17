@@ -25,11 +25,11 @@ Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and
 - [x] Create detailed view of individual content.
 - [x] Create video player with playable content.
 - [x] Control video playback with RC.
-- [ ] Custom video controls.
+- [x] Custom video controls.
 - [ ] Cool animations.
 - [ ] Full Trick Play integration.
 - [ ] VoiceTextEditBox for search.
-- [ ] Player Fast Start.
+- [x] Player Fast Start.
 - [ ] Add localizations for a couple of languages.
 - [ ] Integrate Unit Testing (Roca / Rooibos).
 - [ ] Double check entire app and latest version of BrighterScript for any upgradeable code BRS -> BS.

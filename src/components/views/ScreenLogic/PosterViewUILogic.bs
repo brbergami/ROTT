@@ -9,6 +9,7 @@ sub showPosterView(imdbid = "tt2724064" as String)
 end sub
 
 sub onCloseRequested(event as Object)
+    m.posterView.stopPrebuffer = true
     closeScreen(m.posterView)
 end sub
 

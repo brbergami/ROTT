@@ -17,6 +17,7 @@ sub bindComponents()
     m.contentYear = m.top.findNode("contentYear")
     m.contentDescription = m.top.findNode("contentDescription")
     m.playButton = m.top.findNode("playButton")
+    m.playerView = m.top.findNode("playerView")
     m.requestsTask = createObject("roSGNode", "RequestsTask")
 end sub
 
@@ -95,6 +96,9 @@ sub requestTitleDetails(event as Object)
 end sub
 
 sub onTitleResponse(event as Object)
+    ' Here there's no content to set, but should be the url of the Title selected
+    m.playerView.content = invalid
+
     m.requestsTask.control = "stop"
     response = event.getData()
     responseBody = response.responseBody
@@ -111,12 +115,13 @@ sub onTitleResponse(event as Object)
 end sub
 
 sub onPlayButtonSelected()
-    m.top.playVideo = invalid
+    m.playerView.play = true
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
     if not press then return false
     if key = "back"
+        m.playerView.stopPrebuffer = true
         m.top.close = true
         return true
     end if
