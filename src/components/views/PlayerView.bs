@@ -14,12 +14,13 @@ end sub
 
 sub bindComponents()
     m.player = m.top.findNode("player")
-    m.maskGroup = m.top.findNode("maskGroup")
-    m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
-    m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
-    m.jumpBackwardButton = m.top.findNode("jumpBackwardButton")
-    m.playPauseButton = m.top.findNode("playPauseButton")
-    m.jumpForwardButton = m.top.findNode("jumpForwardButton")
+    ' m.maskGroup = m.top.findNode("maskGroup")
+    ' m.maskGroupAnimation = m.top.findNode("maskGroupAnimation")
+    ' m.maskGroupAnimationInterpolator = m.top.findNode("maskGroupAnimationInterpolator")
+    ' m.jumpBackwardButton = m.top.findNode("jumpBackwardButton")
+    ' m.playPauseButton = m.top.findNode("playPauseButton")
+    ' m.jumpForwardButton = m.top.findNode("jumpForwardButton")
+    ' m.maskGroupTimer = m.top.findNode("maskGroupTimer")
 end sub
 
 sub hookObservers()
@@ -27,9 +28,10 @@ sub hookObservers()
     m.top.observeField("play", "playContent")
     m.top.observeField("stopPrebuffer", "onStopPrebuffer")
     m.player.observeField("state", "onPlayerStateChange")
-    m.jumpBackwardButton.observeField("buttonSelected", "onJumpBackwardButtonPressed")
-    m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
-    m.jumpForwardButton.observeField("buttonSelected", "onJumpForwardButtonPressed")
+    ' m.jumpBackwardButton.observeField("buttonSelected", "onJumpBackwardButtonPressed")
+    ' m.playPauseButton.observeField("buttonSelected", "onPlayPauseButtonPressed")
+    ' m.jumpForwardButton.observeField("buttonSelected", "onJumpForwardButtonPressed")
+    ' m.maskGroupTimer.observeField("fire", "onMaskGroupTimerFired")
 end sub
 
 sub setStyles()
@@ -41,32 +43,33 @@ sub setStyles()
     m.player.maxVideoDecodeResolution = [ 1080, 1920 ]
     m.top.enableUI = false
 
-    m.maskGroup.maskSize = [ 1920, 1080 ]
-    m.maskGroup.maskUri = "pkg:/images/transparent-mask.png"
-    m.maskGroup.maskOffset = [ -1920, 0 ] ' Fine tune this
+    ' m.maskGroup.maskSize = [ 1920, 1080 ]
+    ' m.maskGroup.maskUri = "pkg:/images/transparent-mask.png"
+    ' m.maskGroup.maskOffset = [ -1920, 0 ] ' Fine tune this
 
-    m.maskGroupAnimation.duration = 1
-    m.maskGroupAnimation.easeFunction = "linear"
-    m.maskGroupAnimation.control = "start"
+    ' m.maskGroupAnimation.duration = 2
+    ' m.maskGroupAnimation.easeFunction = "linear"
 
-    m.maskGroupAnimationInterpolator.fieldToInterp = "maskGroup.opacity"
-    m.maskGroupAnimationInterpolator.key = [ 0.0, 0.5, 1.0 ]
-    m.maskGroupAnimationInterpolator.keyValue = [ 0.0, 0.5, 1.0 ]
+    ' m.maskGroupAnimationInterpolator.fieldToInterp = "maskGroup.opacity"
+    ' m.maskGroupAnimationInterpolator.key = [ 0.0, 0.5, 1.0, 1.5, 2.0 ]
+    ' m.maskGroupAnimationInterpolator.keyValue = [ 1.0, 0.75, 0.5, 0.25, 0 ]
 
-    m.jumpBackwardButton.iconUri = "pkg:/images/button-rewind.png"
-    m.jumpBackwardButton.translation = [ 660, 480 ]
-    m.jumpBackwardButton.width = 120
-    m.jumpBackwardButton.height = 120
+    ' m.jumpBackwardButton.iconUri = "pkg:/images/button-rewind.png"
+    ' m.jumpBackwardButton.translation = [ 660, 480 ]
+    ' m.jumpBackwardButton.width = 120
+    ' m.jumpBackwardButton.height = 120
 
-    m.playPauseButton.iconUri = "pkg:/images/button-play.png"
-    m.playPauseButton.translation = [ 900, 480 ]
-    m.playPauseButton.width = 120
-    m.playPauseButton.height = 120
+    ' m.playPauseButton.iconUri = "pkg:/images/button-play.png"
+    ' m.playPauseButton.translation = [ 900, 480 ]
+    ' m.playPauseButton.width = 120
+    ' m.playPauseButton.height = 120
 
-    m.jumpForwardButton.iconUri = "pkg:/images/button-forward.png"
-    m.jumpForwardButton.translation = [ 1130, 480 ]
-    m.jumpForwardButton.width = 120
-    m.jumpForwardButton.height = 120
+    ' m.jumpForwardButton.iconUri = "pkg:/images/button-forward.png"
+    ' m.jumpForwardButton.translation = [ 1130, 480 ]
+    ' m.jumpForwardButton.width = 120
+    ' m.jumpForwardButton.height = 120
+
+    ' m.maskGroupTimer.duration = 3
 end sub
 
 sub onJumpBackwardButtonPressed()
@@ -80,6 +83,11 @@ end sub
 sub onJumpForwardButtonPressed()
     ' Define behavior
 end sub
+
+' sub onMaskGroupTimerFired()
+'     m.maskGroupAnimation.control = "start"
+'     m.player.setFocus(true)
+' end sub
 
 sub onContentSet()
     if isNotInvalid(m.top.content)
@@ -115,6 +123,9 @@ sub onPlayerStateChange(event as Object)
     '     m.top.visible = false
     '     m.player.control = "stop"
     '     m.top.close = true
+    else if state = "playing"
+        m.player.setFocus(true)
+        ' m.maskGroupTimer.control = "start"
     end if
 end sub
 

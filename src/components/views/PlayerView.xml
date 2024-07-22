@@ -10,10 +10,10 @@
         <Video
             id="player"
             >
-            <MaskGroup
+            <!-- <MaskGroup
                 id="maskGroup"
-                >
-                <Button
+                > -->
+                <!-- <Button
                     id="jumpBackwardButton"
                     />
                 <Button
@@ -21,15 +21,18 @@
                     />
                 <Button
                     id="jumpForwardButton"
-                    />
-            </MaskGroup>
-            <Animation
+                    /> -->
+            <!-- </MaskGroup> -->
+            <!-- <Animation
                 id="maskGroupAnimation"
                 >
                 <Vector2DFieldInterpolator
                     id="maskGroupAnimationInterpolator"
                      />
-            </Animation>
-        </Videoplayer>
+            </Animation> -->
+        </Video>
+        <!-- <Timer
+            id="maskGroupTimer"
+            /> -->
     </children>
 </component>

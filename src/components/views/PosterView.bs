@@ -32,12 +32,14 @@ sub setStyles()
     sqMarginSmall = 100
     sqMarginBig = sqMarginSmall * 2
     sectorWidth = 550
+    sectorHeight = sectorWidth * 1.5
     ' Should set some rules here to make it play well taking display
     ' size and using rule of thirds to calculate the sizes
 
     ' TBD: Create a mask for the posters, maybe..
     m.poster.translation = [ sqMarginBig, sqMarginBig ]
     m.poster.width = sectorWidth
+    m.poster.height = sectorHeight
 
     m.divider.translation = [ 959, sqMarginBig ]
     m.divider.width = 2 ' Should be even to make it symmetrical in position
