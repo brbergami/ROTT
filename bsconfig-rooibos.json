@@ -1,0 +1,19 @@
+{
+    "rootDir": "src",
+    "files": [ "**/*" ],
+    "stagingFolderPath": "dist",
+    "retainStagingFolder": true,
+    "autoImportComponentScript": true,
+    "sourceMap": true,
+    "plugins": [ "rooibos-roku" ],
+    "rooibos": {
+        "isRecordingCodeCoverage": false,
+        "testsFilePattern": null,
+        "tags": ["!integration", "!deprecated", "!fixme"],
+        "showOnlyFailures": false,
+        "catchCrashes": true,
+        "lineWidth": 70,
+        "failFast": false,
+        "sendHomeOnFinish": false
+    }
+}

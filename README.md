@@ -31,7 +31,8 @@ Written in [BrighterScript](https://github.com/rokucommunity/brighterscript) and
 - [ ] VoiceTextEditBox for search.
 - [x] Player Fast Start.
 - [ ] Add localizations for a couple of languages.
-- [ ] Integrate Unit Testing (Roca / Rooibos).
+- [x] Rooibos Unit Testing integration.
+- [ ] Full Unit Testing project coverage.
 - [ ] Double check entire app and latest version of BrighterScript for any upgradeable code BRS -> BS.
 
 ## Setup instructions
